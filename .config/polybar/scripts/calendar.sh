@@ -1,0 +1,3 @@
+#!/bin/bash
+
+yad --mouse --no-buttons --close-on-unfocus --calendar

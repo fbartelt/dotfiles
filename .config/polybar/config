@@ -1,0 +1,411 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   Modified By Aditya Shakya.
+;
+;==========================================================
+
+[color]
+
+trans = #00000000
+white = #FFFFFF
+black = #000000
+
+bg = ${self.blackish}
+fg = ${self.white}
+fg-alt = ${self.grayish}
+
+acolor = ${self.orange-new}
+curgent = ${self.red}
+cunfocused = ${self.orangish}
+
+## Material Colors
+
+red = #e53935
+pink = #d81b60
+purple = #8e24aa
+deep-purple = #5e35b1
+nice-purple = #660066
+indigo = #3949ab
+blue = #1e88e5
+light-blue = #039be5
+cyan = #00acc1
+teal = #00897b
+green = #43a047
+light-green = #7cb342
+lime = #c0ca33
+yellow = #fdd835
+amber = #ffb300
+orange-new = #FF6F00
+orangish = #F1A31E
+orange = #fb8c00
+deep-orange = #f4511e
+brown = #6d4c41
+grey = #757575
+grayish = #A9ABB0
+blackish = #1F1F1F
+blue-gray = #546e7a
+
+;==========================================================
+
+[bar/main]
+monitor = ${env:MONITOR:}
+width = 100%
+height = 30
+offset-x = 0%
+offset-y = 0%
+bottom = false
+fixed-center = true
+line-size = 2
+
+background = ${color.bg}
+foreground = ${color.fg}
+
+border-size = 3
+border-color = ${color.bg}
+
+module-margin-left = 1
+module-margin-right = 1
+
+;==========================================================
+
+font-0 = "M+ 1p,M+ 1p light:style=light,Regular:pixelsize=12;2"
+font-1 = "Material Icons:size=13;4"
+font-2 = "M+ 2p,M+ 2p light:style=light,Regular:pixelsize=14;2"
+font-3 = "Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid"
+font-4 = "Font Awesome 5 Brands,Font Awesome 5 Brands Regular:style=Regular"
+
+;==========================================================
+
+cursor-click = pointer
+cursor-scroll = default
+
+tray-position = center
+tray-padding = 0
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+;== Module Location ========================================================
+
+modules-left = arch  term files browser settings i3
+modules-right =  xkeyboard cpu memory volume battery date powermenu
+ 
+;== Modules ========================================================
+
+[module/arch]
+type = custom/text
+content = 
+content-padding = 2
+content-background = ${color.acolor}
+content-foreground = ${color.fg}
+click-left = rofi -modi drun  -show drun -show-icon -hide-scroll-bar
+click-middle = rofi -modi drun  -show drun -show-icon -hide-scroll-bar
+click-right =rofi -modi drun  -show drun -show-icon -hide-scroll-bar
+
+[module/term]
+type = custom/text
+content = 
+content-foreground = ${color.fg-alt}
+click-left = code &
+
+[module/files]
+type = custom/text
+content = 
+content-padding = 1
+content-foreground = ${color.fg-alt}
+click-left = thunar &
+click-right = ranger &
+
+[module/browser]
+type = custom/text
+content = 
+content-padding = 1
+content-foreground = ${color.fg-alt}
+click-left = firefox &
+
+[module/settings]
+type = custom/text
+content = 
+content-padding = 1
+content-foreground = ${color.fg-alt}
+click-left = xfce4-settings &
+click-right = lxappearance &
+
+[module/i3]
+type = internal/i3
+pin-workspaces = true
+enable-click = true
+enable-scroll = true
+strip-wsnumbers = true
+format-padding = 0
+
+ws-icon-0 = $ws1;
+ws-icon-1 = $ws2;
+ws-icon-2 = $ws3;
+ws-icon-3 = $ws4;
+ws-icon-4 = $ws5;
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+
+format = <label-state>
+label-focused = %name%
+label-unfocused = %name%
+label-urgent = %name%
+label-empty = %name%
+label-visible = %name%
+
+label-unfocused-padding = 2
+label-empty-padding = 2
+label-urgent-padding = 2
+label-focused-padding = 2
+label-visible-padding = 2
+
+label-focused-foreground = ${color.acolor}
+label-visible-foreground = ${color.cunfocused}
+label-urgent-foreground = ${color.curgent}
+label-empty-foreground = ${color.fg}
+label-unfocused-foreground = ${color.cunfocused}
+
+label-focused-underline = ${color.acolor}
+label-urgent-underline = ${color.curgent}
+label-visible-underline = ${color.cunfocused}
+label-unfocused-underline = ${color.cunfocused}
+
+label-focused-font = 3
+label-visible-font = 3
+label-urgent-font = 3
+label-empty-font = 3
+label-unfocused-font = 3
+
+;==========================================================
+
+[module/mpd]
+type = internal/mpd
+;format-online = <toggle> <label-song> 
+format-online =  <label-song> 
+
+icon-play = 
+icon-pause = 
+
+label-song-maxlen = 25
+label-song-ellipsis = true
+
+;==========================================================
+
+[module/memory]
+type = internal/memory
+
+; Seconds to sleep between updates
+; Default: 5
+interval = 3
+; Available tags:
+;   <label> (default)
+;   <bar-used>
+;   <bar-free>
+;   <ramp-used>
+;   <ramp-free>
+;   <bar-swap-used>
+;   <bar-swap-free>
+;   <ramp-swap-used>
+;   <ramp-swap-free>
+format = <label> 
+
+; Available tokens:
+;   %percentage_used% (default)
+;   %percentage_free%
+;   %gb_used%
+;   %gb_free%
+;   %gb_total%
+;   %mb_used%
+;   %mb_free%
+;   %mb_total%
+;   %percentage_swap_used%
+;   %percentage_swap_free%
+;   %mb_swap_total%
+;   %mb_swap_free%
+;   %mb_swap_used%
+;   %gb_swap_total%
+;   %gb_swap_free%
+;   %gb_swap_used%
+
+label = %percentage_used%%
+
+[module/cpu]
+type = internal/cpu
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 5
+format = <label> 
+
+; Available tokens:
+;   %percentage% (default) - total cpu load averaged over all cores
+;   %percentage-sum% - Cumulative load on all cores
+;   %percentage-cores% - load percentage for each core
+;   %percentage-core[1-9]% - load percentage for specific core
+label =  %percentage%%
+
+[module/volume]
+type = internal/alsa
+;speaker-mixer = Speaker
+;headphone-mixer = Headphone
+;headphone-id = 16
+;mapped = true
+format-volume = <ramp-volume> <label-volume>
+label-volume = %percentage%%
+format-muted-prefix = " "
+label-muted = MUTE
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-3 = 
+ramp-volume-4 = 
+ramp-volume-5 = 
+ramp-volume-6 = 
+
+[module/battery]
+type = internal/battery
+full-at = 99
+time-format = %H:%M
+battery = BAT0
+adapter = AC
+format-charging = <animation-charging> <label-charging>
+;label-charging = %percentage%% (%time%)
+label-charging = %percentage%%
+format-discharging = <ramp-capacity> <label-discharging>
+;label-discharging = %percentage%% (%time%)
+label-discharging = %percentage%%
+format-unknown = <animation-unknown> <label-unknown>
+label-unknown = %percentage%%
+format-full = <label-full>
+
+format-full-prefix = " "
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+ramp-capacity-0-foreground = ${color.red}
+ramp-capacity-foreground   = ${color.fg}
+bar-capacity-width = 10
+
+animation-unknown = ""
+
+animation-charging-0 = ""
+animation-charging-1 = ""
+animation-charging-2 = ""
+animation-charging-3 = ""
+animation-charging-4 = ""
+
+animation-charging-framerate = 750
+
+[module/network]
+type = custom/script
+exec = $HOME/.config/polybar/scripts/check-network
+click-left = networkmanager_dmenu &
+click-right = networkmanager_dmenu &
+tail = true
+
+[module/date]
+type = internal/date
+interval = 30
+label = %{A3:~/.config/polybar/scripts/popup-calendar.sh --popup &:} %time% %{A}
+time =  %I:%M %p
+time-alt =  %d-%m-%Y
+
+[module/powermenu]
+type = custom/text
+content = 
+content-padding = 2
+content-background = ${color.acolor}
+content-foreground = ${color.fg}
+click-left = $HOME/.config/polybar/scripts/pmenu_g
+click-right = $HOME/.config/polybar/scripts/pmenu_g
+
+[module/xkeyboard]
+type = internal/xkeyboard
+
+; List of indicators to ignore
+blacklist-0 = num lock
+;blacklist-1 = scroll lock
+; Available tags:
+;   <label-layout> (default)
+;   <label-indicator> (default)
+format = <label-indicator> <label-layout> 
+format-spacing = 0
+
+; Available tokens:
+;   %layout%
+;   %name%
+;   %number%
+;   %icon%
+; Default: %layout%
+label-layout = %layout%
+label-layout-padding = 0
+label-layout-background = ${color.bg}
+label-layout-foreground = ${color.fg}
+
+; layout-icon-[0-9]+ = layout;icon
+; <label-layout> tag. The part before ';' will try to match %layout% value.
+layout-icon-default = some-icon
+layout-icon-0 = br;B
+layout-icon-1 = us;U
+
+; indicator-icon-[0-9]+ = indicator;off icon;on icon
+indicator-icon-default = 
+indicator-icon-0 = caps lock;-CL;+CL
+indicator-icon-1 = scroll lock;-SL;
+indicator-icon-2 = num lock;-NL;+NL
+
+; Available tokens:
+;   %name% [default]
+;   %icon%
+label-indicator-on = %icon%
+; Available tokens:
+;   %name%
+;   %icon%
+; Default: (none)
+label-indicator-off = -%icon%
+
+; Replaces label-indicator-* if for specific indicators
+; Available tokens:
+;   %name%
+;   %icon%
+label-indicator-on-capslock = 
+label-indicator-off-capslock = 
+label-indicator-on-numlock = 
+label-indicator-off-numlock = 
+;label-indicator-on-scrolllock = 
+label-indicator-off-scrolllock = 
+
+
+[module/popup-calendar]
+type = internal/date
+interval = 30
+label = %{A3:~/.config/polybar/scripts/popup-calendar.sh --popup &:} %time% %{A}
+time =  %I:%M %p
+time-alt =  %Y-%m-%d
+#label =  %{A1:date "+%Y-%m-%d":} %output% %{A}
+#exec = date "+%I:%M %p"
+#click-left = ~/.config/polybar/scripts/clock.sh
+#interval = 5
+click-right = ~/.config/polybar/scripts/popup-calendar.sh --popup &
+
+
+;== EOF ========================================================
