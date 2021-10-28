@@ -3,7 +3,7 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/fbartelt/.oh-my-zsh"
-export VISUAL=code
+export VISUAL=nano
 export EDITOR="$VISUAL"
 
 # Set name of the theme to load --- if set to "random", it will
@@ -76,6 +76,8 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+eval $(keychain --eval --quiet id_rsa_litc)
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -105,3 +107,4 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ls='lsd'
 alias dotfiles='/usr/bin/git --git-dir=/home/fbartelt/.dotfiles/ --work-tree=/home/fbartelt'
+alias ufmg='cd /home/fbartelt/Documents/UFMG'
