@@ -3,7 +3,7 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/fbartelt/.oh-my-zsh"
-export VISUAL=nano
+export VISUAL=vim
 export EDITOR="$VISUAL"
 
 # Set name of the theme to load --- if set to "random", it will
@@ -108,4 +108,4 @@ eval $(keychain --eval --quiet id_rsa_litc)
 alias ls='lsd'
 alias dotfiles='/usr/bin/git --git-dir=/home/fbartelt/.dotfiles/ --work-tree=/home/fbartelt'
 alias ufmg='cd /home/fbartelt/Documents/UFMG'
-source /opt/ros/noetic/setup.zsh
+#source /opt/ros/noetic/setup.zsh
