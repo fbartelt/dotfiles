@@ -77,11 +77,12 @@ module-margin-right = 1
 
 ;==========================================================
 
-font-0 = "M+ 1p,M+ 1p light:style=light,Regular:pixelsize=12;2"
+font-0 = "M PLUS 1,M PLUS 1 Light:style=Light,Regular:pixelsize=12;2"
 font-1 = "Material Icons:size=13;4"
-font-2 = "M+ 2p,M+ 2p light:style=light,Regular:pixelsize=14;2"
-font-3 = "Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid"
-font-4 = "Font Awesome 5 Brands,Font Awesome 5 Brands Regular:style=Regular"
+font-2 = "M PLUS 2,M PLUS 2 Light:style=Light,Regular:pixelsize=14;2"
+font-3 = "Font Awesome 6 Free,Font Awesome 6 Free Solid:style=Solid:pixelsize:12;2"
+font-4 = "Font Awesome 6 Brands,Font Awesome 6 Brands Regular:style=Regular:pixelsize=13;2"
+font-5 = "Font Awesome 6 Free,Font Awesome 6 Free Regular:style=Regular:pixelsize:12;2"
 
 ;==========================================================
 
@@ -113,13 +114,15 @@ click-right =rofi -modi drun  -show drun -show-icon -hide-scroll-bar
 
 [module/term]
 type = custom/text
-content = 
+content =  
+;
 content-foreground = ${color.fg-alt}
 click-left = code &
 
 [module/files]
 type = custom/text
-content = 
+content =  
+;
 content-padding = 1
 content-foreground = ${color.fg-alt}
 click-left = thunar &
@@ -127,14 +130,15 @@ click-right = ranger &
 
 [module/browser]
 type = custom/text
-content = 
+content = 
 content-padding = 1
 content-foreground = ${color.fg-alt}
 click-left = firefox &
 
 [module/settings]
 type = custom/text
-content = 
+content = 
+;
 content-padding = 1
 content-foreground = ${color.fg-alt}
 click-left = xfce4-settings &
@@ -242,8 +246,8 @@ format = <label>
 ;   %gb_swap_free%
 ;   %gb_swap_used%
 
-label = %percentage_used%%
-
+label = %{T6}%{T-}  %percentage_used%%
+; 
 [module/cpu]
 type = internal/cpu
 
@@ -257,8 +261,8 @@ format = <label>
 ;   %percentage-sum% - Cumulative load on all cores
 ;   %percentage-cores% - load percentage for each core
 ;   %percentage-core[1-9]% - load percentage for specific core
-label =  %percentage%%
-
+label =  %percentage%%
+; 
 [module/volume]
 type = internal/alsa
 ;speaker-mixer = Speaker
@@ -282,7 +286,7 @@ ramp-volume-6 = 
 type = internal/battery
 full-at = 99
 time-format = %H:%M
-battery = BAT0
+battery = BAT1
 adapter = AC
 format-charging = <animation-charging> <label-charging>
 ;label-charging = %percentage%% (%time%)
