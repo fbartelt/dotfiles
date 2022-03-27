@@ -35,22 +35,22 @@ set $mod Mod4
 #####################################################################################################################
 
 #This is setup for qwerty
-set $up l
-set $down k
-set $left j
-set $right semicolon
+set $left h
+set $down j
+set $up k
+set $right l
 
 #nome dos workspace
-set $ws1 "1:典" 
-set $ws2 "2:家"  
-set $ws3 "3:龠"  
-set $ws4 "4:網" 
-set $ws5 "5:泳" 
-set $ws6 "6:後"  
-set $ws7 "7:今"
-set $ws8 "8:前"  
-set $ws9 "9:戦"  
-
+set $ws1 "1:典"
+set $ws2 "2:家"
+set $ws3 "3:話"
+set $ws4 "4:雑"
+set $ws5 "5:暇"
+set $ws6 "6:今"
+set $ws7 "7:延"
+set $ws8 "8:業"
+set $ws9 "9:楽"
+set $ws10 "10:映"
 #####################################################################################################################
 #################                          Single and Dual screen                                   #################
 #####################################################################################################################
@@ -64,7 +64,7 @@ set $ws9 "9:戦"
 #exec --no-startup-id xrandr --output DVI-I-0 --right-of HDMI-0 --auto
 #exec --no-startup-id xrandr --output DVI-1 --right-of DVI-0 --auto
 #exec --no-startup-id xrandr --output DVI-D-1 --right-of DVI-I-1 --auto
-exec --no-startup-id xrandr --output HDMI2 --right-of HDMI1 --auto
+exec --no-startup-id xrandr --output HDMI-1 --auto --left-of eDP-1
 
 
 # my current setup
@@ -82,10 +82,10 @@ exec --no-startup-id xrandr --output HDMI2 --right-of HDMI1 --auto
 #set $firstMonitor DVI-I-1
 #set $secondMonitor DVI-D-1
 
-set $firstMonitor HDMI1
-set $secondMonitor HDMI2
+set $firstMonitor eDP-1
+set $secondMonitor HDMI-1
 
-workspace 1 output $firstMonitor
+workspace $ws1 output $firstMonitor
 workspace 2 output $firstMonitor
 workspace 3 output $firstMonitor
 workspace 4 output $firstMonitor
@@ -106,7 +106,7 @@ bindsym $mod+6 workspace $ws6
 bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace 10
+bindsym $mod+0 workspace $ws10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
@@ -118,7 +118,7 @@ bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
 bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
-bindsym $mod+Shift+0 move container to workspace 10; workspace 10
+bindsym $mod+Shift+0 move container to workspace $ws10; workspace $ws10
 
 
 
@@ -130,13 +130,13 @@ bindsym $mod+Shift+0 move container to workspace 10; workspace 10
 #bindsym $mod+shift+d exec --no-startup-id dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'
 
 # start rofi full
-bindsym $mod+F11 exec --no-startup-id rofi -show run -fullscreen -font "M+ 1p regular 13"
+bindsym $mod+F11 exec --no-startup-id rofi -show run -fullscreen -font "M PLUS 1:Regular 13"
 
 # start rofi small
-bindsym $mod+d exec --no-startup-id rofi -modi drun -show drun -font "M+ 1p light 13"
+bindsym $mod+d exec --no-startup-id rofi -modi drun -show drun -font "M PLUS 1:Light 13"
 
 # rofi alt tab
-bindsym $mod+Tab exec --no-startup-id rofi -show window -font "M+ 1p light 13"
+bindsym $mod+Tab exec --no-startup-id rofi -show window -font "M PLUS 1:Light 13"
 
 
 #####################################################################################################################
@@ -253,10 +253,10 @@ workspace_auto_back_and_forth yes
 default_orientation horizontal
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+Ctrl+v split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+v split 
 
 # enter fullscreen mode for the focused container
 # Super + F in arcolinux is execute thunar
@@ -325,8 +325,8 @@ mode "resize" {
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 # choose your font
-font pango:M+ 1p Light 13
-#editado, antigo : Noto Mono Regular
+font pango:M PLUS 1, MPLUS 1 Light:style=Light,Regular 13
+#editado, antigo : Noto Mono Regular/
 
 
 
@@ -339,17 +339,26 @@ font pango:M+ 1p Light 13
 # Assign application to start on a specific workspace
 # you can find the class with the program xprop
 
-# Workspace 1 browser related
-#assign [class="Firefox|Vivaldi-stable|Vivaldi-snapshot|Opera"]                      → $ws1
+
+# Workspace 1 text editor related
+#assign [class="sublime-text|sublime_text|Sublime_text|subl|Subl|subl3|Subl3"]       → $ws2
+assign [class="Xed|xed|Brackets|Atom|Code|Geany"]                                   → $ws1
+
+# Workspace 2 Browser related
+assign [class="Firefox|firefox|Navigator"]                                          → $ws2
 #assign [class="Chromium|Google-chrome"]                                             → $ws1
 
-# Workspace 2 text editor related
-#assign [class="sublime-text|sublime_text|Sublime_text|subl|Subl|subl3|Subl3"]       → $ws2
-#assign [class="Xed|xed|Brackets|Atom|Code|Geany"]                                   → $ws2
+# Workspace 3 Communication
+assign [class= "microsoft teams - preview|Microsoft Teams - Preview"]               → $ws3
 
-# Workspace 3 Inkscape
-#assign [class="Inkscape"]                                                           → $ws3
+# Workspace 8 Work
+assign [class= "Slack|slack"]                                                       → $ws8
 
+# Workspace 9 Music
+assign [class= "Spotify"]                                                           → $ws9
+
+# Workspace 10 Video
+assign [class= "vlc|stremio"]                                                       → $ws10
 
 #####################################################################################################################
 #################           autostart   -    execute applications at boot time                      #################
@@ -628,8 +637,12 @@ bindsym XF86AudioStop exec --no-startup-id playerctl stop
 #################                          xbacklight                                               #################
 #####################################################################################################################
 
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 20 # decrease screen brightness
+#bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 20 # increase screen brightness
+#bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 20 # decrease screen brightness
+
+# Workaround xbacklight nao altera o Acer
+bindsym XF86MonBrightnessUp exec --no-startup-id "brightnessctl -q s 20%+" 
+bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl -q s 20%-" 
 
 
 
