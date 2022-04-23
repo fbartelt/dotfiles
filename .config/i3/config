@@ -355,7 +355,7 @@ assign [class= "microsoft teams - preview|Microsoft Teams - Preview"]           
 assign [class= "Slack|slack"]                                                       → $ws8
 
 # Workspace 9 Music
-assign [class= "Spotify"]                                                           → $ws9
+assign [class= "Spotify|spotify"]                                                    → $ws9
 
 # Workspace 10 Video
 assign [class= "vlc|stremio"]                                                       → $ws10
@@ -387,7 +387,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id "setxkbmap -model pc105 -layout br,us -variant , -option grp:alt_caps_toggle"
 
 # num lock activated
-#exec_always --no-startup-id numlockx on
+exec_always --no-startup-id numlockx on
 
 # dropbox
 #exec --no-startup-id dropbox start
@@ -477,6 +477,7 @@ bindsym control+mod1+u exec --no-startup-id pavucontrol
 bindsym $mod+q exec --no-startup-id firefox;focus
 bindsym $mod+a exec --no-startup-id code;focus
 bindsym $mod+e exec --no-startup-id thunar;focus
+bindsym $mod+t exec --no-startup-id htop;focus
 
 #workspace 9 related
 bindsym $mod+F9 exec --no-startup-id evolution;focus
@@ -666,7 +667,7 @@ bindsym $mod+shift+b exec --no-startup-id i3-msg border toggle
 
 #changing border style
 #super+t in arcolinux is starting terminal
-bindsym $mod+t border normal
+#bindsym $mod+t border normal
 bindsym $mod+y border 1pixel
 bindsym $mod+u border none
 
