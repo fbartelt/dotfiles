@@ -98,7 +98,7 @@ scroll-down = i3wm-wsprev
 ;== Module Location ========================================================
 
 modules-left = arch  term files browser settings i3
-modules-right =  xkeyboard cpu memory volume battery date powermenu
+modules-right =  xkeyboard cpu memory pulseaudio battery date powermenu
  
 ;== Modules ========================================================
 
@@ -263,16 +263,19 @@ format = <label>
 ;   %percentage-core[1-9]% - load percentage for specific core
 label =  %percentage%%
 ; 
-[module/volume]
-type = internal/alsa
+[module/pulseaudio]
+type = internal/pulseaudio
 ;speaker-mixer = Speaker
 ;headphone-mixer = Headphone
 ;headphone-id = 16
 ;mapped = true
+sink = alsa_output.usb-1c1f_H210-00.analog-stereo
+use-ui-max = true
 format-volume = <ramp-volume> <label-volume>
 label-volume = %percentage%%
 format-muted-prefix = " "
 label-muted = MUTE
+click-right = pavucontrol
 
 ramp-volume-0 = 
 ramp-volume-1 = 
