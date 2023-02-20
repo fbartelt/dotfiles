@@ -256,7 +256,7 @@ default_orientation horizontal
 bindsym $mod+Ctrl+v split h
 
 # split in vertical orientation
-bindsym $mod+v split 
+bindsym $mod+v split v 
 
 # enter fullscreen mode for the focused container
 # Super + F in arcolinux is execute thunar
