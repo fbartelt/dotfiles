@@ -264,7 +264,7 @@ bindsym $mod+m fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 # qwerty/azerty issue for letter z
-bindsym $mod+s layout stacking
+#bindsym $mod+s layout stacking
 #bindsym $mod+z layout tabbed
 bindsym $mod+z layout toggle split
 
@@ -583,22 +583,23 @@ for_window [class="Terminator"] focus
 #################                          variety for your wallpapers                              #################
 #####################################################################################################################
 
-
+bindsym $mod+Shift+b exec --no-startup-id /home/fbartelt/apod.sh &
+bindsym $mod+Ctrl+b exec --no-startup-id feh --bg-fill /usr/share/backgrounds/arcolinux/arco-wallpaper.jpg &
 #Variety keybindings mod1 = ALT
 # trash wallpaper
-bindsym mod1+t exec --no-startup-id variety -t
+#bindsym mod1+t exec --no-startup-id variety -t
 # next wallpaper
-bindsym mod1+n exec --no-startup-id variety -n
-bindsym mod1+Right exec --no-startup-id variety -n
+#bindsym mod1+n exec --no-startup-id variety -n
+#bindsym mod1+Right exec --no-startup-id variety -n
 # previous wallpaper
-bindsym mod1+p exec --no-startup-id variety -p
-bindsym mod1+Left exec --no-startup-id variety -p
+#bindsym mod1+p exec --no-startup-id variety -p
+#bindsym mod1+Left exec --no-startup-id variety -p
 # favorite wallpaper
-bindsym mod1+f exec --no-startup-id variety -f
+#bindsym mod1+f exec --no-startup-id variety -f
 # pause wallpaper
-bindsym mod1+Up exec --no-startup-id variety --pause
+#bindsym mod1+Up exec --no-startup-id variety --pause
 # resume wallpaper
-bindsym mod1+Down exec --no-startup-id variety --resume
+#bindsym mod1+Down exec --no-startup-id variety --resume
 
 
 #####################################################################################################################
@@ -663,7 +664,7 @@ bindsym $mod+b bar mode toggle
 
 # Border control
 hide_edge_borders both
-bindsym $mod+shift+b exec --no-startup-id i3-msg border toggle
+#bindsym $mod+shift+b exec --no-startup-id i3-msg border toggle
 
 #changing border style
 #super+t in arcolinux is starting terminal
