@@ -342,7 +342,7 @@ font pango:M PLUS 1, MPLUS 1 Light:style=Light,Regular 13
 
 # Workspace 1 text editor related
 #assign [class="sublime-text|sublime_text|Sublime_text|subl|Subl|subl3|Subl3"]       → $ws2
-assign [class="Xed|xed|Brackets|Atom|Code|Geany"]                                   → $ws1
+assign [class="Xed|xed|Brackets|Atom|Code|Geany" window_type="normal"]              → $ws1
 
 # Workspace 2 Browser related
 assign [class="Firefox|firefox|Navigator"]                                          → $ws2
@@ -355,7 +355,7 @@ assign [class= "microsoft teams - preview|Microsoft Teams - Preview"]           
 assign [class= "Slack|slack"]                                                       → $ws8
 
 # Workspace 9 Music
-assign [class= "Spotify|spotify"]                                                    → $ws9
+for_window [class="Spotify|spotify"] move container --no-auto-back-and-forth to workspace $ws9
 
 # Workspace 10 Video
 assign [class= "vlc|stremio"]                                                       → $ws10
