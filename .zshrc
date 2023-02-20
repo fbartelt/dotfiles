@@ -76,7 +76,8 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-eval $(keychain --eval --quiet id_rsa_litc)
+source /opt/ros/noetic/setup.zsh
+#eval $(keychain --eval --quiet id_rsa_litc)
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -109,4 +110,3 @@ alias ls='lsd'
 alias dotfiles='/usr/bin/git --git-dir=/home/fbartelt/.dotfiles/ --work-tree=/home/fbartelt'
 alias ufmg='cd /home/fbartelt/Documents/UFMG'
 alias jctl="journalctl -p 3 -xb"
-#source /opt/ros/noetic/setup.zsh
