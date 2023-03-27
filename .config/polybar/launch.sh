@@ -7,9 +7,15 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch polybar
+tray_output="eDP1"
+
 if type "xrandr"; then
   for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    MONITOR=$m polybar --reload main &
+    tray_pos=""
+    if [[ ${m} == ${tray_ouput} ]]; then
+      tray_pos="center"
+    fi
+    MONITOR=$m TRAY_POSITION=${tray_pos} polybar --reload main &
   done
 else
   polybar --reload main &
