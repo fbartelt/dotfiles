@@ -7,9 +7,13 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch polybar
-for m in $(polybar --list-monitors | cut -d":" -f1); do
+if type "xrandr"; then
+  for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
     MONITOR=$m polybar --reload main &
-done
+  done
+else
+  polybar --reload main &
+fi
 
 #for monitor in $(xrandr | grep connected | awk '{print $1}'); do
 #	POLYMONITOR=$monitor polybar main -c /home/$USER/.config/polybar/config &
