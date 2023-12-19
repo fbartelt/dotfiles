@@ -1,0 +1,218 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;							                   WINDOWS                      							 ;;	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defwindow bar
+  :monitor 0
+  :windowtype "dock"
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "100%"
+                      :height "30px"
+                      :anchor "top center")
+  :reserve (struts :side "top" :distance "4%")
+  (bar))
+
+(defwindow calendar
+	:geometry (geometry :x "83%" 
+						:y "3%" 
+						:width "270px" 
+						:height "60px")
+(cal))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                 MAIN WIDGETS                                ;;	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defwidget bar []
+  (centerbox :orientation "h"
+    (leftstuff :wsp_yuck workspaces_1_yuck)
+    (middlestuff)
+    (rightstuff)))
+
+(defwidget leftstuff [wsp_yuck]
+  (box :class "label" :orientation "h" :space-evenly false :halign "start" :valign "center"
+      (menu)
+      (favorites)
+      (workspaces :wsp_yuck wsp_yuck)))
+
+(defwidget rightstuff []
+  (box :class "rightstuff" :orientation "h" :space-evenly false :halign "end"
+    (music)
+    (cpu :icon "")
+    (ram :icon "")
+    (audio :volicon "" :muteicon "")
+    (battery :status {EWW_BATTERY.BAT1.status}
+                :battery {EWW_BATTERY.BAT1.capacity}
+                :charge "" :one "" :two "" :three "" :four ""
+                :five "" :six "" :seven "" :full "")
+    (time :clockicon "" :dateicon "")
+    (powermenu :icon "")))
+
+(defwidget middlestuff []
+  (box :class "middlestuff" :orientation "h" :space-evenly false :halign "end"
+  (button :class "favicon" :onrightclick "$HOME/.config/eww/scripts/launchtray.sh" ".")))
+
+(defwidget icon-module [icon ?class ?visible]
+  (box :class "${class} icon-module"
+       :orientation "h"
+       :halign "end"
+       :valign "center"
+       :space-evenly false
+       :visible {visible ?: true} ; because the argument is optional
+    (label :class "icon-module__icon${class}" :text "${icon}")
+    (children)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;							                   LEFT STUFF                   							 ;;	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defwidget favorites []
+  (box :class "favs" :orientation "h" :space-evenly true :halign "start" :valign "center"
+    (button :class "favicon" :onclick "code &" "")
+    (button :class "favicon" :onclick "thunar &" "")
+    (button :class "favicon" :onclick "firefox &" "")
+    (button :class "favicon" :onclick "lxappearance &" "")))
+
+(defwidget menu []
+  (box :class "menu" :orientation "h" :space-evenly true :halign "start" :valign "center"
+    (button :class "menuicon" :onclick "rofi -modi drun  -show drun -show-icon -hide-scroll-bar &"
+                             :onmiddleclick "rofi -modi drun  -show drun -show-icon -hide-scroll-bar &"
+                             :onrightclick "rofi -modi drun  -show drun -show-icon -hide-scroll-bar &" "")))
+
+(deflisten workspaces_1_yuck "scripts/workspaces.sh")
+
+(defwidget workspaces [wsp_yuck]
+  (literal :content wsp_yuck))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;							                   RIGHT STUFF                   							 ;;	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defwidget cpu [icon]
+  (icon-module :class "material" :icon icon
+  (label :class "commontext" :text "${round(EWW_CPU.avg,0)}%" )))
+  
+(defwidget ram [icon]
+  (icon-module :class "material" :icon icon 
+  (label :class "commontext" :text "${round(EWW_RAM.used_mem_perc,0)}%" )))
+
+(defwidget battery [battery status one two three four five six seven full charge]
+  (icon-module :class "material" :icon {status == 'Charging' ? charge :
+      battery < 10 ? one :
+        battery < 28 ? two :
+          battery < 42 ? three :
+            battery < 56 ? four :
+              battery < 70 ? five :
+                battery < 84 ? six : 
+                  battery < 98 ? seven : full}
+      (label :class "commontext" :text "${battery}%")))
+
+(defvar showtime "true")
+(defpoll time_poll :interval "1s" "date '+%I:%M %p'")
+(defpoll date_poll :interval "1m" "date +%d-%m-%Y")
+
+(defwidget time [clockicon dateicon]
+  (icon-module :class "material" :icon {showtime ? clockicon : dateicon}
+  (button :class "commontext" 
+    :onrightclick "scripts/opencalendar.sh"
+    :onclick "scripts/switch_datetime.sh" {showtime ? "${time_poll}" : "${date_poll}"} 
+    )))
+
+(defpoll volume :interval "0.5s" "pamixer --get-volume-human")
+
+;;(defwidget audio []
+;;  (eventbox :class "commontext"
+;;    :onscroll "pamixer --allow-boost --set-volume {}"
+;;    :onclick "[[ $(pamixer --get-mute) = \"false\" ]] && pamixer -m || pamixer -u" 
+;;      (icon-module :class "material" :icon ""
+;;        (label :class "commontext" :text "${volume}"))))
+;; 
+
+(defwidget audio [volicon muteicon]
+  (eventbox :class "commontext"
+    :onclick {volume == "muted"? "pamixer -u" : "pamixer -m"}
+    :onrightclick {"pavucontrol &"}
+    :onscroll "scripts/volume.sh {}" (icon-module :class "material" :icon {volume == "muted"? muteicon : volicon}
+        (label :class "commontext" :text "${volume}"))
+  ))
+    
+(defwidget powermenu [icon]
+  (box :class "powermenu" :orientation "h" :space-evenly true :halign "start" :valign "center"
+    (button :class "menuicon" :onclick "scripts/powermenu.sh"
+                              :onmiddleclick "scripts/powermenu.sh"
+                              :onrightclick "scripts/powermenu.sh" icon)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;							                   CALENDAR                     							 ;;	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defwidget cal []
+  (box :class "cal-box" :orientation "v"
+	  (box :class "cal-inner-box"
+	    (calendar :class "cal" 
+			  :day calendar_day 
+			  :month calendar_month 
+			  :year calendar_year))))
+
+(defpoll calendar_day :interval "10h"
+    "date '+%d'")
+(defpoll calendar_month :interval "10h"
+    "date '+%m'")
+(defpoll calendar_year :interval "10h"
+    "date '+%Y'")
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;							                   MUSIC                         							 ;;	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar eww "$HOME/eww/target/release/eww -c $HOME/.config/eww")
+(deflisten musictest :initial "~" "~/.config/eww/scripts/musicscroll.sh")
+(defvar music_reveal false)
+(defvar song_status "") ;; This is update inside musicscroll
+
+;; Widget
+(defwidget music [] 
+  (eventbox :onhover "${eww} update music_reveal=true"
+			  :onhoverlost "${eww} update music_reveal=false"
+		(box :class "module-2" :orientation "h" :space-evenly "false" :vexpand "false" :hexpand "false" 
+			(button :class "song" :wrap "true" :onrightclick "~/.config/eww/scripts/music_win.sh" musictest)
+	    (revealer :transition "slideright"
+			      :reveal music_reveal
+			      :duration "350ms"
+          (box :vexpand "false" :hexpand "false" :orientation "h" 
+            (button :class "song_btn_prev" :onclick "playerctl previous" "")
+					  (button :class "song_btn_play" :onclick "playerctl play-pause" {song_status == "Paused" ? "" : ""})
+					  (button :class "song_btn_next" :onclick "playerctl next" ""))))))
+
+;; Card Selector
+;; (box :class "music_cover_art" :vexpand "false" :hexpand "false" :style "background-image: url('${cover_art}');")
+(defwidget music_card []
+		(box :class "music_card" :orientation "h" :space-evenly "false" :vexpand "false" :hexpand "false"
+			(box :orientation "v" :spacing 20 :space-evenly "false" :vexpand "false" :hexpand "false"
+				(label :halign "center" :class "music" :wrap "true" :limit-width 13 :text musictest)
+				(label :halign "center" :class "music_artist" :wrap "true" :limit-width 15 :text song_status)
+				(box :orientation "h" :spacing 15 :halign "center" :space-evenly "false" :vexpand "false" :hexpand "false"
+					(button :class "music_btn_prev" :onclick "playerctl previous" "")
+					(button :class "music_btn_play" :onclick "playerctl play-pause" {song_status == "Paused" ? "" : ""})
+					(button :class "music_btn_next" :onclick "playerctl next" ""))
+				(box :class "music_bar" :halign "center" :vexpand "false" :hexpand "false" :space-evenly "false"
+					(scale :onscroll "mpc -q seek {}" :min 0 :active "true" :max 100 :value song_status)))))
+
+(defwindow music_win :stacking "fg" :focusable "false" :screen 1
+	    :geometry (geometry :x "0" :y "7%" :width 428 :height 104 :anchor "top center")
+			 (music_card))
+
+(defwidget metric [label value onchange]
+  (box :orientation "h"
+       :class "metric"
+       :space-evenly false
+    (box :class "label" label)
+    (scale :min 0
+           :max 101
+           :active {onchange != ""}
+           :value value
+           :onchange onchange)))

@@ -110,3 +110,13 @@ alias ls='lsd'
 alias dotfiles='/usr/bin/git --git-dir=/home/fbartelt/.dotfiles/ --work-tree=/home/fbartelt'
 alias ufmg='cd /home/fbartelt/Documents/UFMG'
 alias jctl="journalctl -p 3 -xb"
+#get fastest mirrors in your neighborhood
+alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
+alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
+alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
+alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
+
+## Coppelia 
+export COPPELIASIM_ROOT_DIR="/home/fbartelt/Coppelia"
+alias coppelia="${COPPELIASIM_ROOT_DIR}/coppeliaSim.sh"
+alias wifipass="sudo grep -r '^psk=' /etc/NetworkManager/system-connections/"
