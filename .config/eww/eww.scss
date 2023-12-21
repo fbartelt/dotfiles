@@ -174,43 +174,109 @@ $magenta: #BB9AF7;
 
 // Calendar
 .cal-box {
-  background-color: $black;
+  background-color: $background;
   font-family: "M PLUS 1 Light";
-  font-size: 1em;
+  font-size: 14px;
   font-weight: bold;
+  color: $white;
 
   .cal-inner-box {
-      padding: 1rem 1rem .2rem;
+      padding: .2rem .2rem .2rem;
 
       .cal {
           &.highlight {
               padding: 10rem;
           }
 
-          padding: .8rem .25rem 0rem;
+          padding: .1rem .25rem 0rem;
           margin-left: 10px;
       }
   }
 }
 
 calendar:selected {
-  color: $blue;
+  color: $strongorange;
 }
 
 calendar.header {
-color: $blue;
+color: $lightorange;
 font-weight: bold;
 }
 
 calendar.button {
-color: $magenta;
+color: $orange;
 }
 
 calendar.highlight {
-color: $magenta;
+color: $lightorange;
 font-weight: bold;
 }
 
 calendar:indeterminate {
-color: $background;
+color: $gray;
+}
+
+.music_card {
+  background-color: #0f0f17;
+border-radius: 16px;
+}
+
+.music_cover_art {
+background-size: cover;
+background-position: center;
+min-height: 150px;
+box-shadow: 1px 1px 1px 1px #06060b;
+min-width: 150px;
+margin: 10px;
+border-radius: 20px;
+}
+
+.music {
+	color: #bbc5d7;
+  font-family: "M PLUS 1 Light";
+	font-size : 13px;
+	font-weight : normal;
+	margin : 0px 0px 0px 0px;
+}
+.music_artist {
+	color: #bbc5d7;
+  font-family: "M PLUS 1 Light";
+	font-size : 12px;
+	font-weight : normal;
+	margin : 0px 0px 0px 9px;
+}
+.music_btn_prev, .music_btn_play, .music_btn_next {
+	font-family: Material Symbols Outlined;
+}
+.music_btn_prev {
+	color: #bbc5d7;
+	font-size : 22px;
+	font-weight : normal;
+	margin: 0px 0px 0px 0px;
+}
+.music_btn_play {
+	color: #a1bdce;
+	font-size : 32px;
+	font-weight : normal;
+	margin: 0px 0px 0px 0px;
+}
+.music_btn_next {
+	color: #bbc5d7;
+	font-size : 22px;
+	font-weight : normal;
+	margin: 0px 0px 0px 0px;
+}
+.music_bar scale trough highlight {
+	all: unset;
+    background-image: linear-gradient(to right, #afcee0 30%, #a1bdce 50%, #77a5bf 100% *50);
+	border-radius: 24px;
+}
+.music_bar scale trough {
+	all: unset;
+	background-color: #232232;
+    box-shadow: 0 6px 5px 2px #06060b;
+	border-radius: 24px;
+	min-height: 13px;
+	min-width: 190px;
+	margin : -10px 10px 20px 0px;
 }
