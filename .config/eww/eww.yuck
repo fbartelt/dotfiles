@@ -29,15 +29,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defwidget bar []
   (centerbox :orientation "h"
-    (leftstuff :wsp_yuck workspaces_1_yuck)
+    (leftstuff)
     (middlestuff)
     (rightstuff)))
 
-(defwidget leftstuff [wsp_yuck]
+(defwidget leftstuff []
   (box :class "label" :orientation "h" :space-evenly false :halign "start" :valign "center"
       (menu)
       (favorites)
-      (workspaces :wsp_yuck wsp_yuck)))
+      (workspaces)))
 
 (defwidget rightstuff []
   (box :class "rightstuff" :orientation "h" :space-evenly false :halign "end"
@@ -52,6 +52,7 @@
     (time :clockicon "" :dateicon "")
     (powermenu :icon "")))
 
+;; Tray support through stalonetray (button is a backup when stalonetray is not running or is killed)
 (defwidget middlestuff []
   (box :class "middlestuff" :orientation "h" :space-evenly false :halign "end"
   (button :class "favicon" :onrightclick "$HOME/.config/eww/scripts/launchtray.sh &" ".")))
@@ -87,8 +88,8 @@
 
 (deflisten workspaces_1_yuck "scripts/workspaces.sh")
 
-(defwidget workspaces [wsp_yuck]
-  (literal :content wsp_yuck))
+(defwidget workspaces []
+  (literal :content workspaces_1_yuck))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -115,15 +116,12 @@
                   battery < 98 ? seven : full}
       (label :class "commontext" :text "${battery}%")))
 
-(defvar showtime "true")
-(defpoll time_poll :interval "1s" "date '+%I:%M %p'")
-(defpoll date_poll :interval "1m" "date +%d-%m-%Y")
-
+(defvar showtime "true") ; Changes wheter to show time or date
 (defwidget time [clockicon dateicon]
   (icon-module :class "material" :icon {showtime ? clockicon : dateicon}
   (button :class "commontext" 
     :onrightclick "scripts/opencalendar.sh"
-    :onclick "scripts/switch_datetime.sh" {showtime ? "${time_poll}" : "${date_poll}"} 
+    :onclick "scripts/switch_datetime.sh" {showtime ? formattime("${EWW_TIME}", "%I:%M %p") : formattime("${EWW_TIME}", "%d-%m-%Y")} 
     )))
 
 (defpoll volume :interval "0.5s" "pamixer --get-volume-human")
@@ -157,11 +155,12 @@
 (defwidget cal []
   (box :class "cal-box" :orientation "v"
 	  (box :class "cal-inner-box"
-	    (calendar :class "cal" 
-			  :day calendar_day 
-			  :month calendar_month 
+	    (calendar :class "cal" :show-details true
+			  :day calendar_day
+			  :month calendar_month
 			  :year calendar_year))))
 
+; Polls needed because calendar autoupdates if EWW_TIME is used. Makes impossible to cycle through months
 (defpoll calendar_day :interval "10h"
     "date '+%d'")
 (defpoll calendar_month :interval "10h"
@@ -173,23 +172,21 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;							                   MUSIC                         							 ;;	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defvar eww "$HOME/eww/target/release/eww -c $HOME/.config/eww")
 (deflisten titlescroll :initial "~" "~/.config/eww/scripts/musicscroll.sh")
 (defvar music_reveal false)
 (defvar song_status "") ;; This is update inside musicscroll (music_get)
 (defvar cover_art "")
 (defvar songtitle "")
 (defvar songartist "")
-(defvar songpos "")
+(defvar songpos 0)
 
 ;; Widget
 (defwidget music [] 
-  (eventbox :onhover "${eww} update music_reveal=true"
-			  :onhoverlost "${eww} update music_reveal=false"
+  (eventbox :onhover "${EWW_EXECUTABLE} update music_reveal=true"
+			  :onhoverlost "${EWW_EXECUTABLE} update music_reveal=false"
         :cursor "pointer"
 		(box :class "module-2" :orientation "h" :space-evenly "false" :vexpand "false" :hexpand "false" 
-			(button :class "song" :wrap "true" :onrightclick "~/.config/eww/scripts/music_win.sh" titlescroll)
+			(button :class "song" :onrightclick "~/.config/eww/scripts/music_win.sh" titlescroll)
 	    (revealer :transition "slideright"
 			          :reveal music_reveal
 			          :duration "350ms"
