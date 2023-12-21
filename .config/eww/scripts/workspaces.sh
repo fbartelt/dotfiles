@@ -33,7 +33,7 @@ gib_workspace_yuck() {
   done
 }
 
-box_attrs=':orientation "h" :class "workspaces" :space-evenly false :halign "left" :valign "center" :vexpand false '
+box_attrs=':orientation "h" :class "workspaces" :space-evenly false :halign "start" :valign "center" :vexpand false '
 echo "$(gib_workspace_yuck 1)"
 # eww -c ~/.config/eww update workspaces_1_yuck="(box $box_attrs $(gib_workspace_yuck))"
 
