@@ -1,4 +1,4 @@
-LOCK_FILE="${HOME}/.cache/stalone_launch.lock"
+LOCK_FILE="/tmp/stalone_launch.lock"
 
 run() {
     stalonetray --icon-gravity W --grow-gravity NE --icon-size 10 --slot-size 22 --geometry 1x1+955+2 --no-shrink false --window-type toolbar &

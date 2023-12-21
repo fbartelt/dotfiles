@@ -1,9 +1,9 @@
 EWW_BIN="${HOME}/eww/target/release/eww"
-LOCK_FILE="${HOME}/.cache/eww_launch.lock"
+LOCK_FILE="/tmp/eww_launch.lock"
 TRAY_LAUNCH="${HOME}/.config/eww/scripts/launchtray.sh"
 
 run() {
-    ${EWW_BIN} open bar
+    env XDG_CACHE_HOME=/tmp ${EWW_BIN} open bar
 }
 
 if [[ ! `pidof eww` ]]; then

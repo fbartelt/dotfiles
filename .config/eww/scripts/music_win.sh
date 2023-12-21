@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOCK_FILE="$HOME/.cache/eww-music.lock"
+LOCK_FILE="/tmp/eww-music.lock"
 EWW_BIN="${HOME}/eww/target/release/eww"
 
 run() {

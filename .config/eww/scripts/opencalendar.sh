@@ -2,7 +2,7 @@
 
 ## Created   by https://github.com/rxyhn
 
-LOCK_FILE="$HOME/.cache/eww-calendar.lock"
+LOCK_FILE="/tmp/eww-calendar.lock"
 EWW_BIN="${HOME}/eww/target/release/eww"
 
 run() {
