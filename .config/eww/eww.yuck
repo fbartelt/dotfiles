@@ -13,11 +13,16 @@
   (bar))
 
 (defwindow calendar
-	:geometry (geometry :x "83%" 
-						:y "3%" 
-						:width "270px" 
-						:height "60px")
-(cal))
+	    :geometry (geometry :x "83.9%" 
+			                    :y "3%" 
+			                    :width "270px" 
+			                    :height "200px")
+  (cal))
+
+(defwindow music_win 
+      :stacking "fg" 
+	    :geometry (geometry :x "26%" :y "3%" :width "428px" :height "104px" :anchor "top center")
+	(music_card))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                 MAIN WIDGETS                                ;;	
@@ -49,7 +54,7 @@
 
 (defwidget middlestuff []
   (box :class "middlestuff" :orientation "h" :space-evenly false :halign "end"
-  (button :class "favicon" :onrightclick "$HOME/.config/eww/scripts/launchtray.sh" ".")))
+  (button :class "favicon" :onrightclick "$HOME/.config/eww/scripts/launchtray.sh &" ".")))
 
 (defwidget icon-module [icon ?class ?visible]
   (box :class "${class} icon-module"
@@ -141,9 +146,9 @@
     
 (defwidget powermenu [icon]
   (box :class "powermenu" :orientation "h" :space-evenly true :halign "start" :valign "center"
-    (button :class "menuicon" :onclick "scripts/powermenu.sh"
-                              :onmiddleclick "scripts/powermenu.sh"
-                              :onrightclick "scripts/powermenu.sh" icon)))
+    (button :class "menuicon" :onclick "scripts/powermenu.sh &"
+                              :onmiddleclick "scripts/powermenu.sh &"
+                              :onrightclick "scripts/powermenu.sh &" icon)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;							                   CALENDAR                     							 ;;	
@@ -170,41 +175,45 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defvar eww "$HOME/eww/target/release/eww -c $HOME/.config/eww")
-(deflisten musictest :initial "~" "~/.config/eww/scripts/musicscroll.sh")
+(deflisten titlescroll :initial "~" "~/.config/eww/scripts/musicscroll.sh")
 (defvar music_reveal false)
-(defvar song_status "") ;; This is update inside musicscroll
+(defvar song_status "") ;; This is update inside musicscroll (music_get)
+(defvar cover_art "")
+(defvar songtitle "")
+(defvar songartist "")
+(defvar songpos "")
 
 ;; Widget
 (defwidget music [] 
   (eventbox :onhover "${eww} update music_reveal=true"
 			  :onhoverlost "${eww} update music_reveal=false"
+        :cursor "pointer"
 		(box :class "module-2" :orientation "h" :space-evenly "false" :vexpand "false" :hexpand "false" 
-			(button :class "song" :wrap "true" :onrightclick "~/.config/eww/scripts/music_win.sh" musictest)
+			(button :class "song" :wrap "true" :onrightclick "~/.config/eww/scripts/music_win.sh" titlescroll)
 	    (revealer :transition "slideright"
-			      :reveal music_reveal
-			      :duration "350ms"
-          (box :vexpand "false" :hexpand "false" :orientation "h" 
-            (button :class "song_btn_prev" :onclick "playerctl previous" "")
-					  (button :class "song_btn_play" :onclick "playerctl play-pause" {song_status == "Paused" ? "" : ""})
-					  (button :class "song_btn_next" :onclick "playerctl next" ""))))))
+			          :reveal music_reveal
+			          :duration "350ms"
+        (box :vexpand "false" :hexpand "false" :orientation "h" 
+          (button :class "song_btn_prev" :onclick "playerctl previous" "")
+					(button :class "song_btn_play" :onclick "playerctl play-pause" {song_status == "Paused" ? "" : ""})
+					(button :class "song_btn_next" :onclick "playerctl next" ""))))))
 
 ;; Card Selector
 ;; (box :class "music_cover_art" :vexpand "false" :hexpand "false" :style "background-image: url('${cover_art}');")
 (defwidget music_card []
 		(box :class "music_card" :orientation "h" :space-evenly "false" :vexpand "false" :hexpand "false"
-			(box :orientation "v" :spacing 20 :space-evenly "false" :vexpand "false" :hexpand "false"
-				(label :halign "center" :class "music" :wrap "true" :limit-width 13 :text musictest)
-				(label :halign "center" :class "music_artist" :wrap "true" :limit-width 15 :text song_status)
-				(box :orientation "h" :spacing 15 :halign "center" :space-evenly "false" :vexpand "false" :hexpand "false"
+      (box :class "music_cover_art" :vexpand "false" :hexpand "false" :style "background-image: url('${cover_art}');")
+			(box :orientation "v" :spacing 10 :space-evenly "false" :vexpand "false" :hexpand "false"
+				(label :halign "start" :class "music" :wrap "true" :limit-width 350 :text songtitle)
+				(label :halign "start" :class "music_artist" :wrap "true" :limit-width 350 :text songartist)
+				(box :orientation "h" :spacing 10 :halign "center" :space-evenly "false" :vexpand "false" :hexpand "false"
 					(button :class "music_btn_prev" :onclick "playerctl previous" "")
 					(button :class "music_btn_play" :onclick "playerctl play-pause" {song_status == "Paused" ? "" : ""})
 					(button :class "music_btn_next" :onclick "playerctl next" ""))
 				(box :class "music_bar" :halign "center" :vexpand "false" :hexpand "false" :space-evenly "false"
-					(scale :onscroll "mpc -q seek {}" :min 0 :active "true" :max 100 :value song_status)))))
+					(scale :onscroll "./config/eww/scripts/musicvol.sh {}" :min 0 :active "true" :max 100 :value songpos)))))
 
-(defwindow music_win :stacking "fg" :focusable "false" :screen 1
-	    :geometry (geometry :x "0" :y "7%" :width 428 :height 104 :anchor "top center")
-			 (music_card))
+
 
 (defwidget metric [label value onchange]
   (box :orientation "h"

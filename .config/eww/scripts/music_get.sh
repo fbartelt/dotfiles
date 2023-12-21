@@ -35,10 +35,18 @@ else
     if [ "$STATUS" = "Stopped" ]; then
         echo "No music is playing"
     elif [ "$STATUS" = "Paused"  ]; then
-        playerctl --player=${PLAYER} metadata --format "$FORMAT"
+        eww update songtitle="$(playerctl --player=$PLAYER metadata --format "{{title}}" 2>/dev/null)"
+        eww update songartist="$(playerctl --player=$PLAYER metadata --format "{{artist}}" 2>/dev/null)"
+        eww update songpos="$(awk '{print $1/$2*100}' 2>/dev/null <<< "$(playerctl metadata --format '{{position}}' 2>/dev/null) $(playerctl metadata --format '{{mpris:length}}' 2>/dev/null)")"
+        eww update cover_art=$(playerctl -a --player=$PLAYER metadata 2>/dev/null | grep artUrl | awk '{print $3}')
+        playerctl --player=${PLAYER} metadata --format "$FORMAT" 2>/dev/null
     elif [ "$STATUS" = "~"  ]; then
         echo "$STATUS"
     else
-        playerctl --player=${PLAYER} metadata --format "$FORMAT"
+        eww update songtitle="$(playerctl --player=$PLAYER metadata --format "{{title}}" 2>/dev/null)"
+        eww update songartist="$(playerctl --player=$PLAYER metadata --format "{{artist}}" 2>/dev/null)"
+        eww update songpos="$(awk '{print $1/$2*100}' 2>/dev/null <<< "$(playerctl metadata --format '{{position}}' 2>/dev/null) $(playerctl metadata --format '{{mpris:length}}' 2>/dev/null)")"
+        eww update cover_art=$(playerctl -a --player=$PLAYER metadata 2>/dev/null | grep artUrl | awk '{print $3}')
+        playerctl --player=${PLAYER} metadata --format "$FORMAT" 2>/dev/null
     fi
 fi
