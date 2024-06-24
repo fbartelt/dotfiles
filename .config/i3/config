@@ -319,7 +319,7 @@ assign [class= "vlc|stremio|Stremio"]                                           
 
 
 #Eww
-exec_always --no-startup-id /home/fbartelt/eww/launch.sh &
+exec_always --no-startup-id /home/fbartelt/.config/eww/launch.sh &
 
 #Authentication dialog
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
