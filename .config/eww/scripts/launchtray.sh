@@ -1,3 +1,4 @@
+#!/bin/bash
 LOCK_FILE="/tmp/stalone_launch.lock"
 
 run() {

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 PATH="$PATH:/home/fbartelt/eww/target/release"
 
 gib_workspace_names() {

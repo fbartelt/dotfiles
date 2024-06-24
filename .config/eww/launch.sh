@@ -1,3 +1,4 @@
+#!/bin/bash
 EWW_BIN="${HOME}/eww/target/release/eww"
 LOCK_FILE="/tmp/eww_launch.lock"
 TRAY_LAUNCH="${HOME}/.config/eww/scripts/launchtray.sh"
@@ -15,9 +16,9 @@ fi
 if [[ ! -f "$LOCK_FILE" ]]; then
   touch "$LOCK_FILE"
   run
-  ${TRAY_LAUNCH}
+  # ${TRAY_LAUNCH}
 else
-  ${EWW_BIN} close bar
+  ${EWW_BIN} close-all
   rm "$LOCK_FILE"
   killall stalonetray
 fi
