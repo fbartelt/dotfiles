@@ -50,7 +50,7 @@ set $right l
 #exec --no-startup-id xrandr --output HDMI-1 --auto --left-of eDP-1
 
 # my current setup
-set $firstMonitor eDP-1
+set $firstMonitor eDP1
 set $secondMonitor HDMI-1-0
 
 # Workspace names
@@ -328,7 +328,7 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 #exec --no-startup-id blueberry-tray
 
 # network
-exec --no-startup-id nm-applet
+exec --no-startup-id nm-applet --indicator
 
 #keyboards
 exec --no-startup-id "setxkbmap -model pc105 -layout br,us -variant , -option grp:alt_caps_toggle"
@@ -477,12 +477,12 @@ bindsym XF86AudioStop exec --no-startup-id playerctl stop
 #################                          xbacklight                                               #################
 #####################################################################################################################
 
-#bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 20 # increase screen brightness
-#bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 20 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 20 # decrease screen brightness
 
 # Workaround xbacklight nao altera o Acer
-bindsym XF86MonBrightnessUp exec --no-startup-id "brightnessctl -q s 20%+" 
-bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl -q s 20%-" 
+#bindsym XF86MonBrightnessUp exec --no-startup-id "brightnessctl -q s 20%+" 
+#bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl -q s 20%-" 
 
 #####################################################################################################################
 #################                          bar toggle                                               #################
