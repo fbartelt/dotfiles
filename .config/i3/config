@@ -50,7 +50,7 @@ set $right l
 #exec --no-startup-id xrandr --output HDMI-1 --auto --left-of eDP-1
 
 # my current setup
-set $firstMonitor eDP1
+set $firstMonitor eDP-1
 set $secondMonitor HDMI-1-0
 
 # Workspace names
