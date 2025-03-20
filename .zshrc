@@ -115,12 +115,17 @@ alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacma
 alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
 alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
 alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
+alias imshow="kitten icat"
+alias unicode="kitten unicode_input"
 
 ## Coppelia 
 export COPPELIASIM_ROOT_DIR="/home/fbartelt/Coppelia"
 alias coppelia="${COPPELIASIM_ROOT_DIR}/coppeliaSim.sh"
 alias wifipass="sudo grep -r '^psk=' /etc/NetworkManager/system-connections/"
 alias dltry="wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0"
+
+#docker workaround
+#alias docker="sudo docker"
 
 ex ()
 {
@@ -145,3 +150,23 @@ ex ()
     echo "'$1' is not a valid file"
   fi
 }
+# Install Ruby Gems to ~/gems
+export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
+export PATH="$PATH:$GEM_HOME/bin"
+
+#export PYENV_ROOT="$HOME/.pyenv"
+#[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+#eval "$(pyenv init - zsh)"
+
+__conda_setup="$('/usr/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/usr/etc/profile.d/conda.sh" ]; then
+        . "/usr/etc/profile.d/conda.sh"
+    else
+        export PATH="/usr/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
