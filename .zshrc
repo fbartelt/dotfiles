@@ -107,7 +107,7 @@ source /opt/ros/noetic/setup.zsh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ls='lsd'
-alias dotfiles='/usr/bin/git --git-dir=/home/fbartelt/.dotfiles/ --work-tree=/home/fbartelt'
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias ufmg='cd /home/fbartelt/Documents/UFMG'
 alias jctl="journalctl -p 3 -xb"
 #get fastest mirrors in your neighborhood
