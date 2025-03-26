@@ -319,7 +319,7 @@ assign [class= "vlc|stremio|Stremio"]                                           
 
 
 #Eww
-exec_always --no-startup-id /home/fbartelt/.config/eww/launch.sh &
+exec_always --no-startup-id ~/.config/eww/launch.sh &
 
 #Authentication dialog
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
@@ -338,7 +338,7 @@ exec_always --no-startup-id numlockx on
 
 #feh sets wallpaper
 exec --no-startup-id feh --bg-fill /usr/share/backgrounds/arcolinux/arco-wallpaper.jpg &
-exec --no-startup-id /home/fbartelt/apod.sh &
+exec --no-startup-id ~/.config/i3/scripts/apod.sh &
 
 #Polybar
 # exec_always --no-startup-id ~/.config/polybar/launch.sh &
@@ -387,7 +387,7 @@ bindsym $mod+t exec --no-startup-id htop;focus
 #################                          wallpaper                                                #################
 #####################################################################################################################
 
-bindsym $mod+b exec --no-startup-id /home/fbartelt/apod.sh &
+bindsym $mod+b exec --no-startup-id ~/.config/i3/scripts/apod.sh &
 bindsym $mod+Mod1+b exec --no-startup-id feh --bg-fill /usr/share/backgrounds/arcolinux/arco-wallpaper.jpg &
 
 #####################################################################################################################

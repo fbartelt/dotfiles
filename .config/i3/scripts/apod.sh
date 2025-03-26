@@ -1,0 +1,1 @@
+echo "https://apod.nasa.gov/apod/$(curl https://apod.nasa.gov/apod/astropix.html -s | grep -ioP '<img SRC="([^"#]+)"' | cut -d'"' -f2)" | xargs curl -o $HOME/.wallpaper && feh --bg-fill $HOME/.wallpaper
