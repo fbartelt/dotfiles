@@ -5,6 +5,7 @@
 export ZSH="/home/fbartelt/.oh-my-zsh"
 export VISUAL=vim
 export EDITOR="$VISUAL"
+export CONDA_CHANGEPS1=false
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
