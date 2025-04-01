@@ -1,0 +1,5 @@
+configuration {
+run-shell-command: "kitty -e {cmd}";
+}
+@theme "/usr/share/rofi/themes/gruvbox-dark-soft.rasi"
+//@theme "~/.config/rofi/onedark.rasi"
