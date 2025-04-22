@@ -19,9 +19,27 @@ return {
                 "lua-language-server",
                 "python-lsp-server",
                 "black",
+                "stylua",
                 -- "pyright" -- cannot install due to ICU 75 (requires old version 73)
             }
         }
+    },
+    {
+    "hrsh7th/nvim-cmp",
+    opts = require "configs.cmp"
+    },
+    {
+        "Vigemus/iron.nvim",
+        -- main = "iron.core",
+        -- opts = require "configs.iron",
+        config = function()
+            local iron = require("iron.core")
+            iron.setup(require("configs.iron"))
+            -- require "configs.iron"
+        end,
+        ft = {"python", "lua", "javascript"}
+        -- main = "iron.core",
+        -- opts = require "configs.iron",
     },
 -- {
   -- 	"nvim-treesitter/nvim-treesitter",

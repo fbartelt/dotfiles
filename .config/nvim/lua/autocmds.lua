@@ -11,3 +11,10 @@ autocmd("FileType", {
     vim.opt_local.smartindent = true
   end,
 })
+
+autocmd("FileType", {
+  pattern = "python",
+  callback = function()
+    vim.opt_local.colorcolumn = "72"
+  end,
+})
