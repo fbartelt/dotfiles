@@ -30,6 +30,7 @@ return {
     },
     {
         "Vigemus/iron.nvim",
+        dependencies = {"nvim-telescope/telescope.nvim" },
         -- main = "iron.core",
         -- opts = require "configs.iron",
         config = function()
@@ -53,7 +54,7 @@ return {
         init = function()
             require "configs.vimtex"
         end,
-    }
+    },
     -- {
     --     "goerz/jupytext.nvim",
     --     version = '0.2.0',
