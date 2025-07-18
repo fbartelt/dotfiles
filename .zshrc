@@ -124,7 +124,8 @@ export COPPELIASIM_ROOT_DIR="/home/fbartelt/Coppelia"
 alias coppelia="${COPPELIASIM_ROOT_DIR}/coppeliaSim.sh"
 alias wifipass="sudo grep -r '^psk=' /etc/NetworkManager/system-connections/"
 alias dltry="wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0"
-
+alias vpnu="sudo wg-quick up fbartelt"
+alias vpnd="sudo wg-quick down fbartelt"
 #docker workaround
 #alias docker="sudo docker"
 

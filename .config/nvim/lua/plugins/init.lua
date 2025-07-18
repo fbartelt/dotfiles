@@ -41,6 +41,32 @@ return {
         -- main = "iron.core",
         -- opts = require "configs.iron",
     },
+    -- Github Copilot
+    {
+        "github/copilot.vim",
+        lazy=false,
+        config = require "configs.copilot",
+    },
+    {
+        "lervag/vimtex",
+        lazy = false,
+        init = function()
+            require "configs.vimtex"
+        end,
+    }
+    -- {
+    --     "goerz/jupytext.nvim",
+    --     version = '0.2.0',
+    --     opts = {},
+    -- },
+        -- opts = {
+        --     format = "py:percent"
+        -- }
+        -- config = function ()
+--             -- require("jupytext").setup(require("configs.jupytext"))
+--         -- end
+--         -- opts = require "configs.jupytext"  -- see Options
+--     },
 -- {
   -- 	"nvim-treesitter/nvim-treesitter",
   -- 	opts = {
