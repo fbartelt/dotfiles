@@ -4,7 +4,7 @@ require("nvchad.configs.lspconfig").defaults()
 local lspconfig = require "lspconfig"
 
 -- EXAMPLE
-local servers = { "html", "cssls" }
+local servers = { "html", "cssls", "pylsp", "clangd" } -- add more servers here
 local nvlsp = require "nvchad.configs.lspconfig"
 
 -- lsps with default config
@@ -28,6 +28,14 @@ lspconfig.pylsp.setup({
         },
     },
 })
+
+lspconfig.clangd.setup {
+    on_attach = function(client, bufnr)
+        client.server_capabilities.signatureHelpProvider = false
+        nvlsp.on_attach(client, bufnr)
+    end,
+    capabilities = nvlsp.capabilities,
+}
 -- lspconfig.pyright.setup({
     -- on_attach = nvlsp.on_attach,
     -- capabilities = nvlsp.capabilities,
