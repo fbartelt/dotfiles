@@ -98,6 +98,7 @@ M = {
         -- venv_python = {
         --                 command = "cplex-env/bin/python"
         --             }
+        env = {PYTHON_BASIC_REPL = "1"} --this is needed for python3.13 and up.
       },
     },
     -- set the file type of the newly created repl to ft
