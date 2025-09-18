@@ -126,6 +126,7 @@ alias wifipass="sudo grep -r '^psk=' /etc/NetworkManager/system-connections/"
 alias dltry="wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0"
 alias vpnu="sudo wg-quick up fbartelt"
 alias vpnd="sudo wg-quick down fbartelt"
+alias neofetch="fastfetch"
 #docker workaround
 #alias docker="sudo docker"
 
