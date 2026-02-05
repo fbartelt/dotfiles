@@ -11,7 +11,12 @@ export CONDA_CHANGEPS1=false
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# spaceship repo: https://github.com/spaceship-prompt/spaceship-prompt
 ZSH_THEME="spaceship"
+export SPACESHIP_CONFIG="$HOME/.config/spaceship.zsh"
+# For some reason, symbols are not read from config file, so we set them here
+SPACESHIP_CHAR_SYMBOL="${SPACESHIP_CHAR_SYMBOL="|> "}"
+SPACESHIP_PACKAGE_SYMBOL="${SPACESHIP_PACKAGE_SYMBOL=" "}"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -74,10 +79,10 @@ ZSH_THEME="spaceship"
 plugins=(git alias-finder docker zsh-interactive-cd zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
+source $SPACESHIP_CONFIG
 
 # User configuration
-
-source /opt/ros/noetic/setup.zsh
+# ROS
 #eval $(keychain --eval --quiet id_rsa_litc)
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -95,9 +100,11 @@ source /opt/ros/noetic/setup.zsh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-#export GTK_IM_MODULE=ibus
-#export XMODIFIERS=@im=ibus
-#export QT_IM_MODULE=ibus
+# Japanese input method
+export GTK_IM_MODULE='fcitx'
+export XMODIFIERS='@im=fcitx'
+export QT_IM_MODULE='fcitx'
+export SDL_IM_MODULE='fcitx'
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -127,8 +134,19 @@ alias dltry="wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=
 alias vpnu="sudo wg-quick up fbartelt"
 alias vpnd="sudo wg-quick down fbartelt"
 alias neofetch="fastfetch"
-#docker workaround
-#alias docker="sudo docker"
+
+# Petrobras related
+alias petr="distrobox enter rmf-ubuntu"
+if [[ -f /etc/os-release ]] && grep -q "Ubuntu" /etc/os-release; then
+    # Source ROS2 if it exists
+    if [[ -f /opt/ros/jazzy/setup.zsh ]]; then
+        source /opt/ros/jazzy/setup.zsh
+        cd ~/rmf_ws/ && source install/setup.zsh
+        echo "|--ROS2 Jazzy sourced.--|"
+    else
+        echo "Inside Ubuntu but ROS2 Jazzy not found."
+    fi
+fi
 
 ex ()
 {
@@ -153,6 +171,12 @@ ex ()
     echo "'$1' is not a valid file"
   fi
 }
+# Command to check arch package of latex CTAN package:
+latexfind ()
+{
+    tlmgr info "$1" | grep collection | awk '{print $2}' | sed "s/collection-/texlive-/"
+}
+
 # Install Ruby Gems to ~/gems
 export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
 export PATH="$PATH:$GEM_HOME/bin"
@@ -161,15 +185,15 @@ export PATH="$PATH:$GEM_HOME/bin"
 #[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 #eval "$(pyenv init - zsh)"
 
-__conda_setup="$('/usr/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/usr/etc/profile.d/conda.sh" ]; then
-        . "/usr/etc/profile.d/conda.sh"
-    else
-        export PATH="/usr/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+# __conda_setup="$('/usr/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/usr/etc/profile.d/conda.sh" ]; then
+#         . "/usr/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/usr/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
 # <<< conda initialize <<<
