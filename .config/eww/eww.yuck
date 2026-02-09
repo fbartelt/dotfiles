@@ -209,9 +209,9 @@
 			          :reveal music_reveal
 			          :duration "350ms"
         (box :vexpand "false" :hexpand "false" :orientation "h" 
-          (button :class "song_btn_prev" :onclick "playerctl previous" "")
+          (button :class "song_btn_prev" :onclick "playerctl previous" "󰼨")
 					(button :class "song_btn_play" :onclick "playerctl play-pause" {song_status == "Paused" ? "" : ""})
-					(button :class "song_btn_next" :onclick "playerctl next" ""))))))
+					(button :class "song_btn_next" :onclick "playerctl next" "󰼧"))))))
 
 ;; Card Selector
 ;; (box :class "music_cover_art" :vexpand "false" :hexpand "false" :style "background-image: url('${cover_art}');")
