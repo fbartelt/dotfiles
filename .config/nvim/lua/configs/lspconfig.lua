@@ -28,6 +28,9 @@ vim.lsp.config("pylsp", vim.tbl_deep_extend("force", base, {
         black = {
           enabled = true, -- Enable Black formatter
         },
+        pycodestyle = {
+            maxLineLength = 88, -- Set max line length for pycodestyle
+        }
       },
     },
   },

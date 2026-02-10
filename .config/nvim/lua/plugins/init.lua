@@ -92,6 +92,7 @@ return {
         "markdown",
         "matlab",
         "markdown_inline",
+        "yuck",
       },
     },
   },
