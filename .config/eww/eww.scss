@@ -216,67 +216,192 @@ calendar:indeterminate {
 color: $gray;
 }
 
+/* Music Card Container - YouTube sidebar size */
 .music_card {
   background-color: #0f0f17;
-border-radius: 16px;
-}
-
-.music_cover_art {
-background-size: cover;
-background-position: center;
-min-height: 150px;
-box-shadow: 1px 1px 1px 1px #06060b;
-min-width: 150px;
-margin: 10px;
-border-radius: 20px;
-}
-
-.music {
-	color: #bbc5d7;
+  border-radius: 12px;
+  padding: 12px;
   font-family: "M PLUS 1 Light";
-	font-size : 13px;
-	font-weight : normal;
-	margin : 0px 0px 0px 0px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
+
+/* Player Section - Fixed size like YouTube recommendation */
+.player_section {
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: rgba(20, 20, 30, 0.9);
+  margin: 4px 0;
+}
+
+/* Cover art container - fixed size */
+.cover_container {
+  min-width: 80px;
+  min-height: 80px;
+  // max-height: 80px;
+  border-radius: 6px 0 0 6px;
+  margin-right: 12px;
+  background-color: #1a1a2e; /* Fallback if no image */
+}
+
+/* Content container */
+.content_container {
+  padding: 8px;
+}
+
+/* Player header */
+.player_header {
+  margin-bottom: 8px;
+}
+
+.player_icon__spotify__Playing {
+  color: #1DB954; /* Spotify green for playing status */
+}
+
+.player_icon__spotify__Paused {
+  color: $gray; /* Spotify green for paused status */
+}
+
+.player_icon__firefox__Playing {
+  color: #FF7139; /* Firefox orange for playing status */
+}
+
+.player_icon__firefox__Paused {
+  color: $gray; /* Indicates paused status */
+}
+
+/* Text container */
+.text_container {
+  margin-bottom: 12px;
+}
+
+.music_title {
+  color: #ffffff;
+  font-family: "M PLUS 1 Light";
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  // line-height: 1.2;
+}
+
 .music_artist {
-	color: #bbc5d7;
+  color: #a1bdce;
   font-family: "M PLUS 1 Light";
-	font-size : 12px;
-	font-weight : normal;
-	margin : 0px 0px 0px 9px;
+  font-size: 12px;
+  opacity: 0.9;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  // line-height: 1.2;
 }
-.music_btn_prev, .music_btn_play, .music_btn_next {
-	font-family: Material Symbols Outlined;
+
+/* Controls container */
+.controls_container {
+  margin-top: 8px;
 }
-.music_btn_prev {
-	color: #bbc5d7;
-	font-size : 22px;
-	font-weight : normal;
-	margin: 0px 0px 0px 0px;
+
+/* Control buttons */
+.control_btn {
+  border: none;
+  border-radius: 4px;
+  margin: 0 4px;
+  padding: 4px 8px;
 }
-.music_btn_play {
-	color: #a1bdce;
-	font-size : 32px;
-	font-weight : normal;
-	margin: 0px 0px 0px 0px;
+
+.control_icon {
+  font-family: "Material Symbols Outlined";
+  font-size: 16px;
+  color: #bbc5d7;
 }
-.music_btn_next {
-	color: #bbc5d7;
-	font-size : 22px;
-	font-weight : normal;
-	margin: 0px 0px 0px 0px;
+
+.playpause_icon {
+  font-family: "Material Symbols Outlined";
+  font-size: 20px;
+  color: #a1bdce;
 }
-.music_bar scale trough highlight {
-	all: unset;
-    background-image: linear-gradient(to right, #afcee0 30%, #a1bdce 50%, #77a5bf 100% *50);
-	border-radius: 24px;
+
+/* Button hover colors */
+.prev_btn:hover .control_icon {
+  color: #ffffff;
+  // color: #ff6b6b;
 }
-.music_bar scale trough {
-	all: unset;
-	background-color: #232232;
-    box-shadow: 0 6px 5px 2px #06060b;
-	border-radius: 24px;
-	min-height: 13px;
-	min-width: 190px;
-	margin : -10px 10px 20px 0px;
+
+.next_btn:hover .control_icon {
+  color: #ffffff;
+  // color: #4ecdc4;
 }
+
+.playpause_btn:hover .playpause_icon {
+  color: #ffffff;
+  // color: #51cf66;
+}
+
+/* Separator */
+.separator {
+  background: rgba(187, 197, 215, 0.15);
+  border-radius: 1px;
+  margin: 4px 0;
+}
+
+// .music_card {
+//   background-color: #0f0f17;
+// border-radius: 16px;
+// }
+//
+// .music_cover_art {
+// background-size: cover;
+// background-position: center;
+// min-height: 150px;
+// box-shadow: 1px 1px 1px 1px #06060b;
+// min-width: 150px;
+// margin: 10px;
+// border-radius: 20px;
+// }
+//
+// .music {
+// 	color: #bbc5d7;
+//   font-family: "M PLUS 1 Light";
+// 	font-size : 13px;
+// 	font-weight : normal;
+// 	margin : 0px 0px 0px 0px;
+// }
+// .music_artist {
+// 	color: #bbc5d7;
+//   font-family: "M PLUS 1 Light";
+// 	font-size : 12px;
+// 	font-weight : normal;
+// 	margin : 0px 0px 0px 9px;
+// }
+// .music_btn_prev, .music_btn_play, .music_btn_next {
+// 	font-family: Material Symbols Outlined;
+// }
+// .music_btn_prev {
+// 	color: #bbc5d7;
+// 	font-size : 22px;
+// 	font-weight : normal;
+// 	margin: 0px 0px 0px 0px;
+// }
+// .music_btn_play {
+// 	color: #a1bdce;
+// 	font-size : 32px;
+// 	font-weight : normal;
+// 	margin: 0px 0px 0px 0px;
+// }
+// .music_btn_next {
+// 	color: #bbc5d7;
+// 	font-size : 22px;
+// 	font-weight : normal;
+// 	margin: 0px 0px 0px 0px;
+// }
+// .music_bar scale trough highlight {
+// 	all: unset;
+//     background-image: linear-gradient(to right, #afcee0 30%, #a1bdce 50%, #77a5bf 100% *50);
+// 	border-radius: 24px;
+// }
+// .music_bar scale trough {
+// 	all: unset;
+// 	background-color: #232232;
+//     box-shadow: 0 6px 5px 2px #06060b;
+// 	border-radius: 24px;
+// 	min-height: 13px;
+// 	min-width: 190px;
+// 	margin : -10px 10px 20px 0px;
+// }

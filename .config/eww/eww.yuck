@@ -1,5 +1,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;							                   WINDOWS                      							 ;;	
+;;                                     WINDOWS                                 ;;	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defwindow bar
   :monitor 0
@@ -34,7 +34,7 @@
 (defwindow music_win 
       :stacking "fg" 
 	    :geometry (geometry :x "26%" :y "3%" :width "428px" :height "104px" :anchor "top center")
-	(music_card))
+	(music_card :play_icon "" :pause_icon "" :prev_icon "󰼨" :next_icon "󰼧"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                 MAIN WIDGETS                                ;;	
@@ -53,7 +53,7 @@
 
 (defwidget rightstuff []
   (box :class "rightstuff" :orientation "h" :space-evenly false :halign "end"
-    (music)
+    (music :play_icon "" :pause_icon "" :prev_icon "󰼨" :next_icon "󰼧")
     (cpu :icon "")
     (ram :icon "")
     (audio :volicon "" :muteicon "")
@@ -87,7 +87,7 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;							                   LEFT STUFF                   							 ;;	
+;;                                   LEFT STUFF                                ;;	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -111,7 +111,7 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;							                   RIGHT STUFF                   							 ;;	
+;;                                   RIGHT STUFF                               ;;	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -167,7 +167,7 @@
                               :onrightclick "scripts/powermenu.sh &" icon)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;							                   CALENDAR                     							 ;;	
+;;                                    CALENDAR                                 ;;	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defwidget cal []
@@ -188,34 +188,45 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;							                   MUSIC                         							 ;;	
+;;                                     MUSIC                                   ;;	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(deflisten titlescroll :initial "~" "~/.config/eww/scripts/musicscroll.sh")
+(defvar spotify_status "")
+(defvar spotify_title "")
+(defvar spotify_artist "")
+(defvar spotify_position 0)
+(defvar spotify_art "")
+(defvar firefox_status "")
+(defvar firefox_title "")
+(defvar firefox_artist "")
+(defvar firefox_position 0)
+(defvar firefox_art "")
 (defvar music_reveal false)
 (defvar song_status "") ;; This is update inside musicscroll (music_get)
 (defvar cover_art "")
 (defvar songtitle "")
 (defvar songartist "")
 (defvar songpos 0)
+(deflisten titlescroll :initial "~" "~/.config/eww/scripts/musicscroll.sh")
 
 ;; Widget
-(defwidget music [] 
+(defwidget music [pause_icon play_icon next_icon prev_icon] 
   (eventbox :onhover "${EWW_EXECUTABLE} update music_reveal=true"
-			  :onhoverlost "${EWW_EXECUTABLE} update music_reveal=false"
-        :cursor "pointer"
-		(box :class "module-2" :orientation "h" :space-evenly "false" :vexpand "false" :hexpand "false" 
-			(button :class "song" :onrightclick "~/.config/eww/scripts/music_win.sh" titlescroll)
-	    (revealer :transition "slideright"
-			          :reveal music_reveal
-			          :duration "350ms"
-        (box :vexpand "false" :hexpand "false" :orientation "h" 
-          (button :class "song_btn_prev" :onclick "playerctl previous" "󰼨")
-					(button :class "song_btn_play" :onclick "playerctl play-pause" {song_status == "Paused" ? "" : ""})
-					(button :class "song_btn_next" :onclick "playerctl next" "󰼧"))))))
+			:onhoverlost "${EWW_EXECUTABLE} update music_reveal=false"
+            :cursor "pointer"
+		        (box :class "module-2" :orientation "h" :space-evenly "false" :vexpand "false" :hexpand "false" 
+			        (button :class "song" :onrightclick "~/.config/eww/scripts/music_win.sh" titlescroll)
+	                (revealer :transition "slideright"
+			                :reveal music_reveal
+			                :duration "350ms"
+                        (box :vexpand "false" :hexpand "false" :orientation "h" 
+                            (button :class "song_btn_prev" :onclick "playerctl previous" prev_icon)
+					        (button :class "song_btn_play" :onclick "playerctl play-pause" {song_status == "Paused" ? pause_icon : play_icon})
+					        (button :class "song_btn_next" :onclick "playerctl next" next_icon))))))
 
 ;; Card Selector
-;; (box :class "music_cover_art" :vexpand "false" :hexpand "false" :style "background-image: url('${cover_art}');")
-(defwidget music_card []
+;; Specific variables for spotify and firefox:
+
+(defwidget OLDmusic_card []
 		(box :class "music_card" :orientation "h" :space-evenly "false" :vexpand "false" :hexpand "false"
       (box :class "music_cover_art" :vexpand "false" :hexpand "false" :style "background-image: url('${cover_art}');")
 			(box :orientation "v" :spacing 10 :space-evenly "false" :vexpand "false" :hexpand "false"
@@ -226,17 +237,111 @@
 					(button :class "music_btn_play" :onclick "playerctl play-pause" {song_status == "Paused" ? "" : ""})
 					(button :class "music_btn_next" :onclick "playerctl next" ""))
 				(box :class "music_bar" :halign "center" :vexpand "false" :hexpand "false" :space-evenly "false"
-					(scale :onscroll "./config/eww/scripts/musicvol.sh {}" :min 0 :active "true" :max 100 :value songpos)))))
+                    ;; This onscroll etc. commands were removed in favor of 'eventbox' widget (https://github.com/elkowar/eww/issues/251)
+					;;(scale :onscroll "./config/eww/scripts/musicvol.sh {}" :min 0 :active "true" :max 100 :value songpos)
+                )
+            )
+        )
+)
 
 
+;; (box :class "music_cover_art" :vexpand "false" :hexpand "false" :style "background-image: url('${cover_art}');")
 
-(defwidget metric [label value onchange]
-  (box :orientation "h"
-       :class "metric"
-       :space-evenly false
-    (box :class "label" label)
-    (scale :min 0
-           :max 101
-           :active {onchange != ""}
-           :value value
-           :onchange onchange)))
+(defwidget player_card [player status title artist position art play_icon pause_icon prev_icon next_icon]
+    (box :class "player_section" :orientation "h" :visible {status != ""}
+        ;; Left side: Cover art with gradient
+        (box :class "cover_container"
+          :style "
+            background-image: 
+              linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.7) 0%,
+                rgba(0, 0, 0, 0.3) 50%,
+                transparent 100%),
+              url('${art}');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+          "
+        )
+        
+        ;; Right side: Content
+        (box :class "content_container" :orientation "v"
+          ;; Header
+          (box :class "player_header" :orientation "h"
+            (label :class "player_icon__${player}__${status}" :text {player == "spotify" ? "" : "󰈹"})
+            ;; (label :class "player_name" :text player)
+            ;; (label :class "player_status_dot" 
+            ;;        :text {status == "Playing" ? "●" : "○"})
+          )
+          
+          ;; Title and Artist
+          (box :class "text_container" :orientation "v"
+            (label :class "music_title" :text title :wrap true)
+            (label :class "music_artist" :text artist :wrap true)
+          )
+          
+          ;; Controls
+          (box :class "controls_container" :orientation "h"
+            (button :onclick "playerctl --player='${player}' previous"
+                    :class "control_btn prev_btn"
+              (label :class "control_icon" :text prev_icon))
+            (button :onclick "playerctl --player='${player}' play-pause"
+                    :class "control_btn playpause_btn"
+              (label :class "playpause_icon" 
+                     :text {status == "Playing" ? pause_icon : play_icon}))
+            (button :onclick "playerctl --player='${player}' next"
+                    :class "control_btn next_btn"
+              (label :class "control_icon" :text next_icon))
+          )
+        )
+    )
+    ;;   (box :class "player_info" :orientation "v" :halign "start" :spacing 5
+    ;;     (label :class "player_header" :text player)
+    ;;     (label :class "music" :wrap true :limit-width 300 
+    ;;       :text {title})
+    ;;     (label :class "music_artist" :wrap true :limit-width 300 
+    ;;       :text {artist})
+    ;;     (box :class "player_controls" :orientation "h" :spacing 10
+    ;;       (button :class "music_btn_prev" 
+    ;;         :onclick "playerctl --player='${player}' previous" prev_icon)
+    ;;       (button :class "music_btn_play" 
+    ;;         :onclick "playerctl --player='${player}' play-pause" 
+    ;;         {status == "Playing" ? play_icon : pause_icon})
+    ;;       (button :class "music_btn_next" 
+    ;;         :onclick "playerctl --player='${player}' next" next_icon))
+    ;;     ;; (scale :class "music_bar" :min 0 :max 100 
+    ;;     ;;   :value {position} 
+    ;;     ;;   :onchange "playerctl --player='${player}' position {}%")
+    ;;   )
+    ;; )
+)
+
+(defwidget music_card [play_icon pause_icon prev_icon next_icon]
+  (box :class "music_card" :orientation "v" :space-evenly false :spacing 20
+    ;; Spotify Section
+    (player_card :player "spotify" :status spotify_status :title spotify_title :artist spotify_artist 
+     :position spotify_position :art spotify_art :play_icon play_icon :pause_icon pause_icon 
+     :prev_icon prev_icon :next_icon next_icon)
+
+    ;; Separator
+    (box :class "separator" :height 1)
+
+    ;; Firefox Section
+    (player_card :player "firefox" :status firefox_status :title firefox_title :artist firefox_artist 
+      :position firefox_position :art firefox_art :play_icon play_icon :pause_icon pause_icon 
+      :prev_icon prev_icon :next_icon next_icon)
+  )
+)
+
+
+;; (defwidget metric [label value onchange]
+;;   (box :orientation "h"
+;;        :class "metric"
+;;        :space-evenly false
+;;     (box :class "label" label)
+;;     (scale :min 0
+;;            :max 101
+;;            :active {onchange != ""}
+;;            :value value
+;;            :onchange onchange)))
