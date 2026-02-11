@@ -219,8 +219,9 @@ color: $gray;
 /* Music Card Container - YouTube sidebar size */
 .music_card {
   background-color: #0f0f17;
+  // background-color: transparent;
   border-radius: 12px;
-  padding: 12px;
+  padding: 6px;
   font-family: "M PLUS 1 Light";
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
@@ -230,7 +231,7 @@ color: $gray;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background-color: rgba(20, 20, 30, 0.9);
-  margin: 4px 0;
+  margin: 1px 0;
 }
 
 /* Cover art container - fixed size */
@@ -338,7 +339,7 @@ color: $gray;
 .separator {
   background: rgba(187, 197, 215, 0.15);
   border-radius: 1px;
-  margin: 4px 0;
+  margin: 0px 0;
 }
 
 // .music_card {
