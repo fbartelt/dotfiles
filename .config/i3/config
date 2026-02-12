@@ -294,7 +294,7 @@ font pango:M PLUS 1, MPLUS 1 Light:style=Light,Regular 13
 assign [class="Xed|xed|Brackets|Atom|Code|Geany" window_type="normal"]                  → $ws1
 
 # Workspace 2 Browser related
-assign [class="Firefox|firefox|Navigator|Chromium"]                                     → $ws2
+assign [class="Firefox|firefox|Navigator|Chromium" window_role="browser"]               → $ws2
 
 # Workspace 3 Communication
 assign [class= "microsoft teams - preview|Microsoft Teams - Preview"]                   → $ws3
