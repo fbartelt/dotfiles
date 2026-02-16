@@ -291,7 +291,7 @@
             (button :onclick "playerctl --player='${player}' play-pause"
                     :class "control_btn playpause_btn"
               (label :class "playpause_icon" 
-                     :text {status == "Playing" ? pause_icon : play_icon}))
+                     :text {status == "Paused" ? pause_icon : play_icon}))
             (button :onclick "playerctl --player='${player}' next"
                     :class "control_btn next_btn"
               (label :class "control_icon" :text next_icon))
