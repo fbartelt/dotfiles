@@ -1,3 +1,6 @@
+# Temporary workaround
+exec_always --no-startup-id sleep 1 && xrandr --setprovideroutputsource modesetting NVIDIA-0
+exec_always --no-startup-id xrandr --output eDP-1-1 --primary --auto
 #####################################################################################################################
 #####################################################################################################################
 #################                          Start of all the settings                                #################
@@ -50,8 +53,13 @@ set $right l
 #exec --no-startup-id xrandr --output HDMI-1 --auto --left-of eDP-1
 
 # my current setup
-set $firstMonitor eDP-1
-set $secondMonitor HDMI-1-0
+# Intel as primary
+# set $firstMonitor eDP-1
+# set $secondMonitor HDMI-1-0
+# Nvidia as primary
+set $firstMonitor eDP-1-1
+set $secondMonitor HDMI-0
+
 
 # Workspace names
 # 1:code(vscode/atom), 2:home(browser), 3:chat(teams/discord), 4:misc., 5:leisure, 6:now, 7:postpone, 8:work(slack), 
@@ -477,12 +485,12 @@ bindsym XF86AudioStop exec --no-startup-id playerctl stop
 #################                          xbacklight                                               #################
 #####################################################################################################################
 
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 20 # decrease screen brightness
+# bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 20 # increase screen brightness
+# bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 20 # decrease screen brightness
 
 # Workaround xbacklight nao altera o Acer
-#bindsym XF86MonBrightnessUp exec --no-startup-id "brightnessctl -q s 20%+" 
-#bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl -q s 20%-" 
+bindsym XF86MonBrightnessUp exec --no-startup-id "brightnessctl -q s 20%+" 
+bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl -q s 20%-" 
 
 #####################################################################################################################
 #################                          bar toggle                                               #################
