@@ -62,18 +62,19 @@ set $secondMonitor HDMI-0
 
 
 # Workspace names
-# 1:code(vscode/atom), 2:home(browser), 3:chat(teams/discord), 4:misc., 5:leisure, 6:now, 7:postpone, 8:work(slack), 
-# 9:music(spotify), 10:movie(stremio)
+# 1:code(vscode/atom), 2:home(browser), 3:music(spotify), 4:chat(teams/discord), 5:Sketch/Whiteboard (Xournal++ / Weylus)
+# 6:Research browser (deep-dive docs), 7:Books, Papers & Mendeley, 8:Polish figures (GIMP / Inkscape), 9:movie(stremio)
+# 10:void (garbage terminals)
 set $ws1 "1:典"
 set $ws2 "2:家"
-set $ws3 "3:話"
-set $ws4 "4:雑"
-set $ws5 "5:暇"
-set $ws6 "6:今"
-set $ws7 "7:延"
-set $ws8 "8:業"
-set $ws9 "9:楽"
-set $ws10 "10:映"
+set $ws3 "3:楽"
+set $ws4 "4:話"
+set $ws5 "5:描"
+set $ws6 "6:究"
+set $ws7 "7:読"
+set $ws8 "8:図"
+set $ws9 "9:映"
+set $ws10 "10:無"
 
 workspace $ws1 output $firstMonitor
 workspace $ws2 output $firstMonitor
@@ -299,22 +300,26 @@ font pango:M PLUS 1, MPLUS 1 Light:style=Light,Regular 13
 # you can find the class with the program xprop
 
 # Workspace 1 text editor related
-assign [class="Xed|xed|Brackets|Atom|Code|Geany" window_type="normal"]                  → $ws1
+assign [class="Xed|xed|Brackets|Atom|Code|Geany" window_type="normal"]                    → $ws1
 
 # Workspace 2 Browser related
-assign [class="Firefox|firefox|Navigator|Chromium" window_role="browser"]               → $ws2
+assign [class="Firefox|firefox|Navigator|Chromium" window_role="browser"]                 → $ws2
 
-# Workspace 3 Communication
-assign [class= "microsoft teams - preview|Microsoft Teams - Preview"]                   → $ws3
+# Workspace 3 Music
+for_window [class="Spotify|spotify"] move container --no-auto-back-and-forth to workspace $ws3
 
-# Workspace 8 Work
-assign [class= "Slack|slack"]                                                           → $ws8
+# Workspace 4 Communication
+assign [class= "microsoft teams - preview|Microsoft Teams - Preview|Discord"]              → $ws4
 
-# Workspace 9 Music
-for_window [class="Spotify|spotify"] move container --no-auto-back-and-forth to workspace $ws9
+# Workspace 5 Sketch
+assign [class= "(?i).*xournalpp.*"]                                                        → $ws5
 
-# Workspace 10 Video
-assign [class= "vlc|stremio|Stremio"]                                                   → $ws10
+# Workspace 8 Sketch
+assign [class= "(?i)Inkscape|gimp"]                                                        → $ws5
+
+# Workspace 9 Video
+assign [class= "stremio|Stremio"]                                                          → $ws9
+
 
 #####################################################################################################################
 #################           autostart   -    execute applications at boot time                      #################
