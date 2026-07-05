@@ -314,8 +314,8 @@ assign [class= "microsoft teams - preview|Microsoft Teams - Preview|Discord"]   
 # Workspace 5 Sketch
 assign [class= "(?i).*xournalpp.*"]                                                        → $ws5
 
-# Workspace 8 Sketch
-assign [class= "(?i)Inkscape|gimp"]                                                        → $ws5
+# Workspace 8 Polish Figures
+assign [class= "(?i)Inkscape|gimp"]                                                        → $ws8
 
 # Workspace 9 Video
 assign [class= "stremio|Stremio"]                                                          → $ws9
