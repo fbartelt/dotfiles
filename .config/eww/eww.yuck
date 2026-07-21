@@ -61,8 +61,8 @@
                 :battery {EWW_BATTERY.BAT1.capacity}
                 :charge "" :one "" :two "" :three "" :four ""
                 :five "" :six "" :seven "" :full "")
-    (time :clockicon "" :dateicon "")
-    (powermenu :icon "")))
+    (time :clockicon "󰅐" :dateicon "")
+    (powermenu :icon "󰤆")))
 
 ;; Tray support through stalonetray (button is a backup when stalonetray is not running or is killed)
 ; (defwidget middlestuff []
