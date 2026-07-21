@@ -134,6 +134,7 @@ alias dltry="wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=
 alias vpnu="sudo wg-quick up fbartelt"
 alias vpnd="sudo wg-quick down fbartelt"
 alias neofetch="fastfetch"
+alias proxyup="ssh -f -N macro-me"
 
 # Petrobras related
 alias petr="distrobox enter rmf-ubuntu"
@@ -142,7 +143,6 @@ if [[ -f /etc/os-release ]] && grep -q "Ubuntu" /etc/os-release; then
     if [[ -f /opt/ros/jazzy/setup.zsh ]]; then
         source /opt/ros/jazzy/setup.zsh
         cd ~/rmf_ws/ && source install/setup.zsh
-        echo "|--ROS2 Jazzy sourced.--|"
     else
         echo "Inside Ubuntu but ROS2 Jazzy not found."
     fi
