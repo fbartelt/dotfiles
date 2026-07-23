@@ -51,11 +51,18 @@
       (favorites)
       (workspaces)))
 
+(defwidget middlestuff []
+  (systray :spacing 5
+           :orientation "h"
+           :space-evenly true
+           :icon-size 18
+           :prepend-new false))
+
 (defwidget rightstuff []
   (box :class "rightstuff" :orientation "h" :space-evenly false :halign "end"
     (music :play_icon "" :pause_icon "" :prev_icon "󰼨" :next_icon "󰼧")
     (cpu :icon "")
-    (ram :icon "")
+    (ram :icon "")
     (audio :volicon "" :muteicon "")
     (battery :status {EWW_BATTERY.BAT1.status}
                 :battery {EWW_BATTERY.BAT1.capacity}
@@ -63,17 +70,6 @@
                 :five "" :six "" :seven "" :full "")
     (time :clockicon "󰅐" :dateicon "")
     (powermenu :icon "󰤆")))
-
-;; Tray support through stalonetray (button is a backup when stalonetray is not running or is killed)
-; (defwidget middlestuff []
-;   (box :class "middlestuff" :orientation "h" :space-evenly false :halign "end"
-;   (button :class "favicon" :onrightclick "$HOME/.config/eww/scripts/launchtray.sh &" ".")))
-(defwidget middlestuff []
-  (systray :spacing 5
-           :orientation "h"
-           :space-evenly true
-           :icon-size 18
-           :prepend-new false))
 
 (defwidget icon-module [icon ?class ?visible]
   (box :class "${class} icon-module"
@@ -90,19 +86,18 @@
 ;;                                   LEFT STUFF                                ;;	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-(defwidget favorites []
-  (box :class "favs" :orientation "h" :space-evenly true :halign "start" :valign "center"
-    (button :class "favicon" :onclick "code &" "")
-    (button :class "favicon" :onclick "thunar &" "")
-    (button :class "favicon" :onclick "firefox &" "")
-    (button :class "favicon" :onclick "lxappearance &" "")))
-
 (defwidget menu []
   (box :class "menu" :orientation "h" :space-evenly true :halign "start" :valign "center"
     (button :class "menuicon" :onclick "rofi -modi drun  -show drun -show-icon -hide-scroll-bar &"
                              :onmiddleclick "rofi -modi drun  -show drun -show-icon -hide-scroll-bar &"
                              :onrightclick "rofi -modi drun  -show drun -show-icon -hide-scroll-bar &" "")))
+
+(defwidget favorites []
+  (box :class "favs" :orientation "h" :space-evenly true :halign "start" :valign "center"
+    (button :class "favicon" :onclick "code &" "")
+    (button :class "favicon" :onclick "thunar &" "󰉖")
+    (button :class "favicon" :onclick "firefox &" "󰈹")
+    (button :class "favicon" :onclick "lxappearance &" "󰒓")))
 
 (deflisten workspaces_1_yuck "scripts/workspaces.sh")
 
@@ -114,7 +109,6 @@
 ;;                                   RIGHT STUFF                               ;;	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
 (defwidget cpu [icon]
   (icon-module :class "material" :icon icon
   (label :class "commontext" :text "${round(EWW_CPU.avg,0)}%" )))
@@ -123,7 +117,17 @@
   (icon-module :class "material" :icon icon 
   (label :class "commontext" :text "${round(EWW_RAM.used_mem_perc,0)}%" )))
 
-(defwidget battery [battery status one two three four five six seven full charge]
+(defpoll volume :interval "0.5s" "pamixer --get-volume-human")
+
+(defwidget audio [volicon muteicon]
+  (eventbox :class "commontext"
+    :onclick {volume == "muted"? "pamixer -u" : "pamixer -m"}
+    :onrightclick {"pavucontrol &"}
+    :onscroll "scripts/volume.sh {}" (icon-module :class "material" :icon {volume == "muted"? muteicon : volicon}
+        (label :class "commontext" :text "${volume}"))
+  ))
+
+ (defwidget battery [battery status one two three four five six seven full charge]
   (icon-module :class "material" :icon {status == 'Charging' ? charge :
       battery < 10 ? one :
         battery < 28 ? two :
@@ -141,25 +145,7 @@
     :onrightclick "scripts/opencalendar.sh"
     :onclick "scripts/switch_datetime.sh" {showtime ? formattime("${EWW_TIME}", "%I:%M %p") : formattime("${EWW_TIME}", "%d-%m-%Y")} 
     )))
-
-(defpoll volume :interval "0.5s" "pamixer --get-volume-human")
-
-;;(defwidget audio []
-;;  (eventbox :class "commontext"
-;;    :onscroll "pamixer --allow-boost --set-volume {}"
-;;    :onclick "[[ $(pamixer --get-mute) = \"false\" ]] && pamixer -m || pamixer -u" 
-;;      (icon-module :class "material" :icon ""
-;;        (label :class "commontext" :text "${volume}"))))
-;; 
-
-(defwidget audio [volicon muteicon]
-  (eventbox :class "commontext"
-    :onclick {volume == "muted"? "pamixer -u" : "pamixer -m"}
-    :onrightclick {"pavucontrol &"}
-    :onscroll "scripts/volume.sh {}" (icon-module :class "material" :icon {volume == "muted"? muteicon : volicon}
-        (label :class "commontext" :text "${volume}"))
-  ))
-    
+   
 (defwidget powermenu [icon]
   (box :class "powermenu" :orientation "h" :space-evenly true :halign "start" :valign "center"
     (button :class "menuicon" :onclick "scripts/powermenu.sh &"
@@ -222,30 +208,6 @@
                             (button :class "song_btn_prev" :onclick "playerctl previous" prev_icon)
 					        (button :class "song_btn_play" :onclick "playerctl play-pause" {song_status == "Paused" ? pause_icon : play_icon})
 					        (button :class "song_btn_next" :onclick "playerctl next" next_icon))))))
-
-;; Card Selector
-;; Specific variables for spotify and firefox:
-
-(defwidget OLDmusic_card []
-		(box :class "music_card" :orientation "h" :space-evenly "false" :vexpand "false" :hexpand "false"
-      (box :class "music_cover_art" :vexpand "false" :hexpand "false" :style "background-image: url('${cover_art}');")
-			(box :orientation "v" :spacing 10 :space-evenly "false" :vexpand "false" :hexpand "false"
-				(label :halign "start" :class "music" :wrap "true" :limit-width 350 :text songtitle)
-				(label :halign "start" :class "music_artist" :wrap "true" :limit-width 350 :text songartist)
-				(box :orientation "h" :spacing 10 :halign "center" :space-evenly "false" :vexpand "false" :hexpand "false"
-					(button :class "music_btn_prev" :onclick "playerctl previous" "")
-					(button :class "music_btn_play" :onclick "playerctl play-pause" {song_status == "Paused" ? "" : ""})
-					(button :class "music_btn_next" :onclick "playerctl next" ""))
-				(box :class "music_bar" :halign "center" :vexpand "false" :hexpand "false" :space-evenly "false"
-                    ;; This onscroll etc. commands were removed in favor of 'eventbox' widget (https://github.com/elkowar/eww/issues/251)
-					;;(scale :onscroll "./config/eww/scripts/musicvol.sh {}" :min 0 :active "true" :max 100 :value songpos)
-                )
-            )
-        )
-)
-
-
-;; (box :class "music_cover_art" :vexpand "false" :hexpand "false" :style "background-image: url('${cover_art}');")
 
 (defwidget player_card [player status title artist position art play_icon pause_icon prev_icon next_icon]
     (box :class "player_section" :orientation "h" :visible {status != ""} :hexpand "false" :vexpand "false"
@@ -335,15 +297,3 @@
       :prev_icon prev_icon :next_icon next_icon)
   )
 )
-
-
-;; (defwidget metric [label value onchange]
-;;   (box :orientation "h"
-;;        :class "metric"
-;;        :space-evenly false
-;;     (box :class "label" label)
-;;     (scale :min 0
-;;            :max 101
-;;            :active {onchange != ""}
-;;            :value value
-;;            :onchange onchange)))
