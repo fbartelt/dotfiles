@@ -83,7 +83,6 @@ source $SPACESHIP_CONFIG
 
 # User configuration
 # ROS
-#eval $(keychain --eval --quiet id_rsa_litc)
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -134,7 +133,10 @@ alias dltry="wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=
 alias vpnu="sudo wg-quick up fbartelt"
 alias vpnd="sudo wg-quick down fbartelt"
 alias neofetch="fastfetch"
+
+# SSH server
 alias proxyup="ssh -f -N macro-me"
+eval $(keychain --eval --quiet --noask id_macro)
 
 # Petrobras related
 alias petr="distrobox enter rmf-ubuntu"
@@ -178,8 +180,9 @@ latexfind ()
 }
 
 # Install Ruby Gems to ~/gems
-export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
-export PATH="$PATH:$GEM_HOME/bin"
+# NO IDEA WHY THIS WAS NEEDED BEFORE
+# export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
+# export PATH="$PATH:$GEM_HOME/bin"
 
 #export PYENV_ROOT="$HOME/.pyenv"
 #[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
