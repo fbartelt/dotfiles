@@ -3,8 +3,10 @@
 
 LOCK_FILE="/tmp/eww-calendar.lock"
 
+ACTIVE_SCREEN=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true) | .output')
+
 run() {
-    eww open calendar
+    eww open calendar --screen "$ACTIVE_SCREEN"
 }
 
 # Run eww daemon if not running
